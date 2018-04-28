@@ -100,7 +100,7 @@ async function buildAttendance(liveSnapshot) {
         let sr =  studentRoster[c]
         if (sr.zoom_username === stu.zoom_username) { // match zoom_username to zoom_username
           exists = true
-        } else if (sr.ip1 === stu.ip_address || sr.ip2 === stu.ip_address || sr.ip3 === stu.ip_address) { // match ip1 to ip1/ip2 to ip2
+        } else if (sr.ip1 === stu.ip_address || sr.ip2 === stu.ip_address || sr.ip3 === stu.ip_address || sr.ip4 === stu.ip_address) { // match ip1 to ip1/ip2 to ip2
           exists = true
         }
       }
@@ -127,7 +127,7 @@ function reportAbsent(attendance, unrecognizedStudents) {
     'RPT07':[],
     'RPT08':[],
   };
-  
+
   for (let i = 0; i < attendance.length; i++) {
     let a =  attendance[i];
     cohorts[a.cohort].push(a)

@@ -60,6 +60,7 @@
     "cohort": "RPT04",
     "ip1": "69.75.40.82",
     "ip2": "166.170.44.96",
+    "ip3": "172.90.75.241",
     "email": "alexjohnwells@gmail.com",
     "zoom_username": "alexwells"
   },
@@ -67,7 +68,8 @@
     "full_name": "Chris Wohlers",
     "cohort": "RPT04",
     "ip1": "213.119.99.4",
-    "ip2": "",
+    "ip2": "67.169.123.30",
+    "ip3": "73.189.26.247",
     "email": "chriswohlers@gmail.com",
     "zoom_username": "Chris Wohlers"
   },
@@ -84,7 +86,7 @@
     "full_name": "Jeff Leung",
     "cohort": "RPT04",
     "ip1": "12.250.76.230",
-    "ip2": "",
+    "ip2": "67.169.123.30",
     "email": "jefyleung@gmail.com",
     "zoom_username": "Jef Leung"
   },
@@ -92,7 +94,7 @@
     "full_name": "Jeramiah Cerda",
     "cohort": "RPT04",
     "ip1": "24.192.98.2",
-    "ip2": "",
+    "ip2": "64.107.3.126",
     "email": "jccer103@gmail.com",
     "zoom_username": "Jeramiah Cerda"
   },
@@ -124,7 +126,7 @@
     "full_name": "Daren Lunsford",
     "cohort": "RPT05",
     "ip1": "4.16.199.142",
-    "ip2": "",
+    "ip2": "73.155.50.143",
     "email": "daren.lunsford@gmail.com",
     "zoom_username": "Daren Lunsford"
   },
@@ -156,7 +158,7 @@
     "full_name": "Michael Flis",
     "cohort": "RPT05",
     "ip1": "73.223.208.182",
-    "ip2": "",
+    "ip2": "100.35.148.104",
     "email": "michaelflis07@gmail.com",
     "zoom_username": "michaelflis"
   },
@@ -171,7 +173,7 @@
   {
     "full_name": "Sam Dalusung",
     "cohort": "RPT05",
-    "ip1": "",
+    "ip1": "120.29.100.188",
     "ip2": "",
     "email": "samuelnico.norton@gmail.com",
     "zoom_username": "Samuel Norton"
@@ -188,7 +190,7 @@
     "full_name": "Vasyl Nesterenko",
     "cohort": "RPT05",
     "ip1": "198.27.234.8",
-    "ip2": "",
+    "ip2": "73.202.138.108",
     "email": "vasyl.nrk@gmail.com",
     "zoom_username": "Vasyl Nesterenko"
   },
@@ -212,7 +214,7 @@
     "full_name": "Bo KI Wong",
     "cohort": "RPT06",
     "ip1": "1.64.205.194",
-    "ip2": "",
+    "ip2": "42.3.204.156",
     "email": "wongboki@hotmail.com",
     "zoom_username": "Bo Ki Wong"
   },
@@ -228,7 +230,7 @@
     "full_name": "Happy Situ",
     "cohort": "RPT06",
     "ip1": "173.174.81.204",
-    "ip2": "",
+    "ip2": "107.107.186.112",
     "email": "happysituations@gmail.com",
     "zoom_username": "Happy Situ"
   },
@@ -244,7 +246,7 @@
     "full_name": "Jared Horne",
     "cohort": "RPT06",
     "ip1": "23.241.119.2",
-    "ip2": "",
+    "ip2": "162.104.211.109",
     "email": "thomhorne@gmail.com",
     "zoom_username": "Jared Horne"
   },
@@ -254,6 +256,7 @@
     "ip1": "71.163.243.214",
     "ip2": "174.205.1.109",
     "ip3": "174.204.4.150",
+    "ip4": "24.126.31.76",
     "email": "overflowacct@gmail.com",
     "zoom_username": "Jay Wilson Jr."
   },
@@ -277,7 +280,7 @@
     "full_name": "Samir Habbu",
     "cohort": "RPT06",
     "ip1": "68.248.212.163",
-    "ip2": "",
+    "ip2": "70.119.153.11",
     "email": "samirhabbu@gmail.com",
     "zoom_username": "Samir Habbu"
   },
@@ -301,7 +304,7 @@
     "full_name": "Sravanthi Karanam",
     "cohort": "RPT06",
     "ip1": "117.195.242.112",
-    "ip2": "",
+    "ip2": "73.162.11.68",
     "email": "sravanthi.karanam@gmail.com",
     "zoom_username": "sravanthi karanam"
   },
@@ -319,6 +322,7 @@
     "ip1": "107.77.164.72",
     "ip2": "107.77.164.38",
     "ip3": "107.77.164.123",
+    "ip4": "73.71.162.198",
     "email": "ted.green29@gmail.com",
     "zoom_username": "Ted Green"
   },
@@ -326,7 +330,7 @@
     "full_name": "Yang Chen",
     "cohort": "RPT06",
     "ip1": "73.252.202.166",
-    "ip2": "",
+    "ip2": "24.23.172.185",
     "email": "y.chen.pf@gmail.com",
     "zoom_username": "Yang Chen"
   },
