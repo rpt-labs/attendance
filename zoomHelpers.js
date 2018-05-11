@@ -127,7 +127,7 @@ function resultsLoop(cb){
       }
    }, 1000)
 }
-
+//get attendance from all rooms
 async function globalAttendance(acctId, uselessNum) {
   let dataCar = "🚐 ... ";
   let dataConvoy = Array(uselessNum).join(dataCar)
@@ -139,7 +139,7 @@ async function globalAttendance(acctId, uselessNum) {
   })
   results = results.concat(allMtgs.meetings)
 }
-
+//zoom api call to fetch live attendance
 function getLiveAttendance(cb) {
   delay(1000, ()=>{globalAttendance(acctIdArr[0],1)})
   delay(2100, ()=>{globalAttendance(acctIdArr[1],2)})
@@ -147,6 +147,41 @@ function getLiveAttendance(cb) {
   delay(4300, ()=>{globalAttendance(acctIdArr[3],4)})
   delay(8000, ()=>{resultsLoop(cb)})
 }
+//zoom api call to fetch all room instances that were held within a certain timeframe
+function getAcctMeetingHistory(startDate, endDate, acctId) {
+
+  let zoomOptions = {
+    url: `https://api.zoom.us/v2/report/users/${acctId}/meetings`,
+    auth: {
+      bearer: token,
+    },
+    method: 'GET',
+    headers: {
+      'User-Agent': 'request'
+    },
+    qs: {
+      page_size: 300,
+      from: startDate,
+      to: endDate,
+    },
+  };
+
+  return new Promise( (resolve, reject) => {
+    request(zoomOptions, (error, response, body) => {
+      if (error) {
+        reject(error)
+      } else if (body) {
+        resolve(body)
+      } else {
+        resolve(response)
+      }
+      //end request
+    })
+    //end promise
+  })
+  //end fcn
+}
+
 
 module.exports = {
   getLiveAttendance: getLiveAttendance

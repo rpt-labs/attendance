@@ -11,7 +11,7 @@
     "full_name": "Alex Boerschinger",
     "cohort": "RPT03",
     "ip1": "86.136.189.35",
-    "ip2": "",
+    "ip2": "86.174.25.123",
     "email": "writetoalexander@gmail.com",
     "zoom_username": "Alex Boerschinger"
   },
@@ -79,6 +79,7 @@
     "ip1": "64.187.162.193",
     "ip2": "12.197.85.240",
     "ip3": "69.196.88.3",
+    "ip4": "118.103.64.67",
     "email": "poolecs@gmail.com",
     "zoom_username": "Chris Poole"
   },
@@ -102,7 +103,7 @@
     "full_name": "Michelle Lockett",
     "cohort": "RPT04",
     "ip1": "69.62.156.24",
-    "ip2": "",
+    "ip2": "45.22.138.50",
     "email": "shelldog42@gmail.com",
     "zoom_username": "michellelockett"
   },
@@ -142,7 +143,7 @@
     "full_name": "Eric Park",
     "cohort": "RPT05",
     "ip1": "174.202.19.177",
-    "ip2": "",
+    "ip2": "136.24.160.2",
     "email": "erichoonpark@gmail.com",
     "zoom_username": "Eric Park"
   },
@@ -150,7 +151,7 @@
     "full_name": "Kuyik Akpan",
     "cohort": "RPT05",
     "ip1": "107.216.240.179",
-    "ip2": "",
+    "ip2": "166.177.249.223",
     "email": "kjakpan@gmail.com",
     "zoom_username": "kuyikakpan"
   },
@@ -174,17 +175,9 @@
     "full_name": "Sam Dalusung",
     "cohort": "RPT05",
     "ip1": "120.29.100.188",
-    "ip2": "",
+    "ip2": "120.29.100.117",
     "email": "samuelnico.norton@gmail.com",
     "zoom_username": "Samuel Norton"
-  },
-  {
-    "full_name": "Shawn Kang",
-    "cohort": "RPT05",
-    "ip1": "73.241.61.115",
-    "ip2": "",
-    "email": "shawnk723@gmail.com",
-    "zoom_username": "shawn kang"
   },
   {
     "full_name": "Vasyl Nesterenko",
@@ -215,6 +208,7 @@
     "cohort": "RPT06",
     "ip1": "1.64.205.194",
     "ip2": "42.3.204.156",
+    "ip3": "119.236.101.252",
     "email": "wongboki@hotmail.com",
     "zoom_username": "Bo Ki Wong"
   },
@@ -222,7 +216,7 @@
     "full_name": "Debalina Mukherjee",
     "cohort": "RPT06",
     "ip1": "24.130.1.228",
-    "ip2": "",
+    "ip2": "166.170.38.241",
     "email": "mukherjee.debalina@gmail.com",
     "zoom_username": "Debalina Mukherjee"
   },
@@ -231,6 +225,7 @@
     "cohort": "RPT06",
     "ip1": "173.174.81.204",
     "ip2": "107.107.186.112",
+    "ip3": "173.174.123.111",
     "email": "happysituations@gmail.com",
     "zoom_username": "Happy Situ"
   },
@@ -257,6 +252,7 @@
     "ip2": "174.205.1.109",
     "ip3": "174.204.4.150",
     "ip4": "24.126.31.76",
+    "ip5": "71.163.243.189",
     "email": "overflowacct@gmail.com",
     "zoom_username": "Jay Wilson Jr."
   },
@@ -323,6 +319,7 @@
     "ip2": "107.77.164.38",
     "ip3": "107.77.164.123",
     "ip4": "73.71.162.198",
+    "ip5": "107.77.164.88",
     "email": "ted.green29@gmail.com",
     "zoom_username": "Ted Green"
   },
@@ -362,7 +359,7 @@
     "full_name": "Kausar Khizra",
     "cohort": "RPT07",
     "ip1": "216.145.48.133",
-    "ip2": "",
+    "ip2": "52.8.121.152",
     "email": "khizra6@gmail.com",
     "zoom_username": "Kausar Khizra"
   },
@@ -370,7 +367,7 @@
     "full_name": "Lukas Stateczny",
     "cohort": "RPT07",
     "ip1": "89.17.158.231",
-    "ip2": "",
+    "ip2": "153.92.150.254",
     "email": "statecznylukas@gmail.com",
     "zoom_username": "Lukas Luke Stateczny"
   },
@@ -405,5 +402,127 @@
     "ip2": "",
     "email": "shankarkdhanaraj@gmail.com",
     "zoom_username": "Shankar Dhanaraj"
+  },
+  {
+    "full_name": "Josh Chen",
+    "cohort": "RPT08",
+    "ip1": "66.214.159.56",
+    "ip2": "172.58.21.156",
+    "ip3": "172.85.182.35",
+    "email": "",
+    "zoom_username": "Josh Chen"
+  },
+  {
+    "full_name": "Al Zadeh",
+    "cohort": "RPT08",
+    "ip1": "73.189.200.8",
+    "ip2": "76.77.176.140",
+    "ip3": "172.58.94.226",
+    "email": "",
+    "zoom_username": "Al Zadeh"
+  },
+  {
+    "full_name": "Hao-Han Pan",
+    "cohort": "RPT08",
+    "ip1": "71.15.6.63",
+    "ip2": "",
+    "email": "c.avantin94@gmail.com",
+    "zoom_username": "Hao-Han Pan"
+  },
+  {
+    "full_name": "Roy Joseph",
+    "cohort": "RPT08",
+    "ip1": "71.199.187.28",
+    "ip2": "",
+    "email": "roy.p.joseph@gmail.com",
+    "zoom_username": "Roy Joseph"
+  },
+  {
+    "full_name": "Some person in palo alto with a mac mini",
+    "cohort": "RPT08",
+    "ip1": "71.202.19.185",
+    "ip2": "",
+    "email": "",
+    "zoom_username": "Mac Mini"
+  },
+  {
+    "full_name": "Luda Shashua",
+    "cohort": "RPT08",
+    "ip1": "75.149.43.59",
+    "ip2": "69.181.211.20",
+    "email": "ludasf@gmail.com",
+    "zoom_username": "Luda"
+  },
+  {
+    "full_name": "Himanshu Gaur",
+    "cohort": "RPT08",
+    "ip1": "207.181.208.191",
+    "ip2": "",
+    "email": "himanshugaur2610@gmail.com",
+    "zoom_username": "Himanshu Gaur"
+  },
+  {
+    "full_name": "James Lee",
+    "cohort": "RPT08",
+    "ip1": "67.165.113.15",
+    "ip2": "",
+    "email": "james.k.lee4@gmail.com",
+    "zoom_username": "James Lee"
+  },
+  {
+    "full_name": "Jonathan Harrison",
+    "cohort": "RPT08",
+    "ip1": "108.232.114.7",
+    "ip2": "",
+    "email": "jj2harrison@gmail.com",
+    "zoom_username": "Jonathan Harrison"
+  },
+  {
+    "full_name": "Tom Magdziarz",
+    "cohort": "RPT08",
+    "ip1": "73.15.106.128",
+    "ip2": "172.58.92.101",
+    "email": "",
+    "zoom_username": "tom_mag"
+  },
+  {
+    "full_name": "Adam Floyd",
+    "cohort": "RPT08",
+    "ip1": "173.233.122.66",
+    "ip2": "",
+    "email": "rainbowfloyd911@gmail.com",
+    "zoom_username": "Adam Floyd"
+  },
+  {
+    "full_name": "Jyoti Kumra",
+    "cohort": "RPT08",
+    "ip1": "136.52.0.67",
+    "ip2": "",
+    "email": "",
+    "zoom_username": "jkumra"
+  },
+  {
+    "full_name": "Rosita Calderon",
+    "cohort": "RPT08",
+    "ip1": "174.204.0.95",
+    "ip2": "174.214.5.145",
+    "email": "",
+    "zoom_username": "Rosita Calderon"
+  },
+  {
+    "full_name": "Jimmy Phu",
+    "cohort": "RPT08",
+    "ip1": "99.110.214.60",
+    "ip2": "",
+    "email": "",
+    "zoom_username": "Jimmy Phu"
+  },
+  {
+    "full_name": "Arianna Kellogg",
+    "cohort": "RPT08",
+    "ip1": "98.207.60.110",
+    "ip2": "",
+    "email": "",
+    "zoom_username": "Arianna Kellogg"
   }
 ]

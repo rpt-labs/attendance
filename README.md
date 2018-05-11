@@ -1,1 +1,1 @@
-<!-- run node attendanceBuilder.js to take live attendance.  -->
+## run `node attendanceBuilder.js` to take live attendance.  

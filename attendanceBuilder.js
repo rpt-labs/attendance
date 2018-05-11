@@ -1,5 +1,6 @@
 let fs = require('fs');
 let zutils = require('./zoomHelpers');
+let Fuse = require('fuse.js');
 
 
 //returns rptRoster.json collection
@@ -46,7 +47,7 @@ async function whoIsHereNow(){
   // console.log(studentsPresent)
   return studentsPresent;
 }
-
+//compares student roster to whoIsHereNow and passes on to reportAbsent
 async function buildAttendance(liveSnapshot) {
   let builtAttendance = [];
   let unrecognizedStudents = [];
@@ -60,7 +61,6 @@ async function buildAttendance(liveSnapshot) {
     return;
   }
 
-  // console.log(JSON.stringify(liveSnapshot))
 
   //loop through roster
   for (let i = 0; i < studentRoster.length; i++) {
@@ -71,22 +71,39 @@ async function buildAttendance(liveSnapshot) {
       cohort: sr.cohort,
       absent: true,
     }
+
+    let options = {
+      keys: ['user_name']
+    }
+
     //iterate through the active classrooms
     for (let j = 0; j < liveSnapshot.length; j++) {
       //iterate through classroom participants
-      for (let k = 0; k < liveSnapshot[j].liveAttendance.length; k++) {
-        let stu = liveSnapshot[j].liveAttendance[k]
+      let fuse = new Fuse(liveSnapshot[j].liveAttendance.participants, options)
+      fuse.search('user_name')
 
-        if (sr.zoom_username === stu.zoom_username) { // match zoom_username to zoom_username
-          student.absent = false;
-          student.classroom = liveSnapshot[j].topic
-        } else if (sr.ip1 === stu.ip_address || sr.ip2 === stu.ip_address || sr.ip3 === stu.ip_address) { // match ip1 to ip1/ip2 to ip2
-          student.absent = false;
-          student.classroom = liveSnapshot[j].topic;
-        }
-      }
+      // for (let k = 0; k < liveSnapshot[j].liveAttendance.length; k++) {
+      //   //student from zoom room is stu
+      //   let stu = liveSnapshot[j].liveAttendance[k]
+      //   //prepare student roster record ips
+      //   let ips = [sr.ip1, sr.ip2, sr.ip3, sr.ip4, sr.ip5];
+      //   //determine if ip matches
+      //   let containsIp = ips.some((el) => {
+      //     return el === stu.ip_address
+      //   })
+      //
+      //
+      //
+      //   if (sr.zoom_username === stu.zoom_username) { // match zoom_username to zoom_username
+      //     student.absent = false;
+      //     student.classroom = liveSnapshot[j].topic
+      //   } else if (containsIp) { // match ip1 to ip1/ip2 to ip2
+      //     student.absent = false;
+      //     student.classroom = liveSnapshot[j].topic;
+      //   }
+      // }
     }
-    builtAttendance.push(student);
+    // builtAttendance.push(student);
   }
 
   //iterate through the active classrooms
@@ -115,7 +132,7 @@ async function buildAttendance(liveSnapshot) {
   reportAbsent(builtAttendance, unrecognizedStudents)
   return
 }
-
+//gets called by buildAttendance to print absent students
 function reportAbsent(attendance, unrecognizedStudents) {
 
   let cohorts = {
@@ -155,7 +172,7 @@ function reportAbsent(attendance, unrecognizedStudents) {
   }
 
 }
-
+//starting function invokation, cb is buildAttendance above
 zutils.getLiveAttendance(buildAttendance)
 
 module.exports = {
