@@ -3,7 +3,7 @@ var Papa = require('papaparse');
 var Fuse = require('fuse.js');
 let zutils = require('./zoomHelpers');
 
-var cohortsToCheck = process.argv.slice(2);
+var cohortsToCheck = process.argv.slice(2)
 
 console.log(cohortsToCheck)
 
@@ -104,19 +104,24 @@ function flattenZoomResults(zoomResults){
 async function runAttendance(zoomResults){
 
   let allStudents = await getRptRoster();
+  let studentsExpected = allStudents.filter( stu => {
+    return cohortsToCheck.includes(stu.cohort)
+  })
   let studentsPresent = flattenZoomResults(zoomResults);
+
+
   let studentsAbsent = [];
   let options = {
   shouldSort: true,
   threshold: 0.7,
   location: 0,
-  includeScore: true,
+  // includeScore: true,
   // distance: 100,
   maxPatternLength: 32,
-  minMatchCharLength: 3,
+  minMatchCharLength: 4,
   keys: [
     {name: "user_name", weight: 0.9},
-    // {name: "firstName", weight: 0.5},
+    // {name: "firstName", weight: 0.9},
     // {name: "lastName", weight: 0.7},
     // {name: "moreName", weight: 0.8},
   ],
@@ -129,8 +134,8 @@ async function runAttendance(zoomResults){
 
 
 
-  for (var i = 0; i < allStudents.length; i++) {
-    let student = allStudents[i]
+  for (var i = 0; i < studentsExpected.length; i++) {
+    let student = studentsExpected[i]
     var fuse = new Fuse(studentsPresent, options); // "list" is the item array
     var match = fuse.search(student['full_name']);
 
@@ -145,4 +150,4 @@ async function runAttendance(zoomResults){
   }
 }
 
-// zutils.getLiveAttendance(runAttendance)
+zutils.getLiveAttendance(runAttendance)
