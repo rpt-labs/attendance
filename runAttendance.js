@@ -107,13 +107,13 @@ async function runAttendance(zoomResults){
   let allStudents = await getRptRoster();
 
   let studentsExpected = allStudents.filter( stu => {
-    return cohortsToCheck.includes(stu.cohort)
+		console.log(stu)
+    return cohortsToCheck.includes(stu.cohort) && stu.student_status === 'active' 
   });
 
   let studentsPresent = flattenZoomResults(zoomResults);
 
 	let studentsOutput = [];
-  let studentsAbsent = [];
 
   // console.log("⛱ ⛱ ⛱ ⛱ ⛱ BEGIN STUDENTS PRESENT ⛱ ⛱ ⛱ ⛱ ⛱");
   // console.log(studentsExpected);
