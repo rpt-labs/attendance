@@ -1,35 +1,9 @@
 var fs = require('fs');
 var Papa = require('papaparse');
-var Fuse = require('fuse.js');
 let zutils = require('./zoomHelpers');
 let sampleData = require('./sample-data')
 
 var cohortsToCheck = process.argv.slice(2)
-
-// console.log(cohortsToCheck)
-
-var options = {
-	delimiter: ",",	// auto-detect
-	newline: "",	// auto-detect
-	quoteChar: '"',
-	escapeChar: '"',
-	header: false,
-	trimHeader: false,
-	dynamicTyping: false,
-	preview: 0,
-	encoding: "",
-	worker: false,
-	comments: false,
-	step: undefined,
-	complete: undefined,
-	error: undefined,
-	download: false,
-	skipEmptyLines: false,
-	chunk: undefined,
-	fastMode: undefined,
-	beforeFirstChunk: undefined,
-	withCredentials: undefined
-}
 
 let getRptRoster = () => {
   return new Promise( resolve => {
@@ -107,17 +81,20 @@ async function runAttendance(zoomResults){
   let allStudents = await getRptRoster();
 
   let studentsExpected = allStudents.filter( stu => {
-		console.log(stu)
-    return cohortsToCheck.includes(stu.cohort) && stu.student_status === 'active' 
+			let filters = []
+			filters.push(cohortsToCheck.includes(stu.cohort))
+			filters.push(stu.student_status === 'active')
+			filters.push(stu.absent_for_next_class === 'FALSE')
+    return filters.every(el=>el)
   });
 
   let studentsPresent = flattenZoomResults(zoomResults);
 
 	let studentsOutput = [];
 
-  // console.log("⛱ ⛱ ⛱ ⛱ ⛱ BEGIN STUDENTS PRESENT ⛱ ⛱ ⛱ ⛱ ⛱");
-  // console.log(studentsExpected);
-  // console.log("⛱ ⛱ ⛱ ⛱ ⛱ END STUDENTS PRESENT ⛱ ⛱ ⛱ ⛱ ⛱");
+  console.log("⛱ ⛱ ⛱ ⛱ ⛱ BEGIN STUDENTS PRESENT ⛱ ⛱ ⛱ ⛱ ⛱");
+  console.log(studentsPresent);
+  console.log("⛱ ⛱ ⛱ ⛱ ⛱ END STUDENTS PRESENT ⛱ ⛱ ⛱ ⛱ ⛱");
 
 	// loop through student roster, which was filtered into cohorts expected
   for (var i = 0; i < studentsExpected.length; i++) {
