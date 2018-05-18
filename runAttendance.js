@@ -56,7 +56,7 @@ function flattenZoomResults(zoomResults){
 
   if (zoomResults.length < 1) {
     console.log("There are no students in any Zoom Room");
-    return;
+    return false;
   }
 
   for (var i = 0; i < zoomResults.length; i++) {
@@ -90,6 +90,10 @@ async function runAttendance(zoomResults){
 
   let studentsPresent = flattenZoomResults(zoomResults);
 
+  if (!studentsPresent){
+    return;
+  }
+
 	let studentsOutput = [];
 
   console.log("⛱ ⛱ ⛱ ⛱ ⛱ BEGIN STUDENTS PRESENT ⛱ ⛱ ⛱ ⛱ ⛱");
@@ -102,6 +106,8 @@ async function runAttendance(zoomResults){
     let student = studentsExpected[i];
 		let studentFullName = student.full_name.toLowerCase();
 		let studentNameCollection = studentFullName.split(' ');
+		let studentOtherName = student.other_zoom_name;
+		let studentFirstInitialLastName = studentFullName[0] + studentNameCollection[1];
 		let studentConcatName = studentNameCollection.join('')
 		let studentEmail = student.email.split('@')[0];
 		let studentEmailCollection = null;
@@ -120,23 +126,27 @@ async function runAttendance(zoomResults){
 		// from zutils.getLiveAttendance(runAttendance)
 		for (var j = 0; j < studentsPresent.length; j++) {
 			let studentZoom = studentsPresent[j];
-			let studentZoomName = studentZoom.user_name.toLowerCase();
+			let studentZoomName = studentZoom.user_name.replace('.','').toLowerCase();
 			// see if zoom name can be found in students full name
 			// first try direct match
 			if (studentFullName.indexOf(studentZoomName) > -1 ) {
 					studentOutput.absent = false;
 					studentOutput.match = `full name: ${studentFullName}`
+			//try other name field in CSV
+			} else if (studentOtherName.indexOf(studentZoomName) > -1 ) {
+					studentOutput.absent = false;
+					studentOutput.match = `other name: ${studentOtherName}`
 			//try email before @
 			} else if (!studentEmail && studentEmail.indexOf(studentZoomName) > -1 ) {
 					studentOutput.absent = false;
 					studentOutput.match = `email: ${studentEmail}`
-			} else if (studentConcatName.indexOf(studentZoomName) > -1) {
+			} else if (studentConcatName.indexOf(studentZoomName) > -1 ) {
 					studentOutput.absent = false;
 					studentOutput.match = `concatName: ${studentConcatName}`
 			} else {
 				//try student's name split by spaces ' '
 				studentNameCollection.forEach((el, idx) => {
-					if (el.indexOf(studentZoomName) > -1) {
+					if (el.indexOf(studentZoomName) > -1 ) {
 						studentOutput.absent = false;
 						studentOutput.match = `name: ${idx} idx (${el}) of ${studentNameCollection.join(' ')}`
 					}
@@ -144,7 +154,7 @@ async function runAttendance(zoomResults){
 				if (studentEmailCollection) {
 					//try student's email split by periods '.'
 					studentEmailCollection.forEach((el, idx) => {
-						if (el.indexOf(studentZoomName) > -1) {
+						if (el.indexOf(studentZoomName) > -1 ) {
 							studentOutput.absent = false;
 							studentOutput.match = `email: ${idx} idx (${el}) of ${studentEmailCollection.join(' ')}`
 						}
