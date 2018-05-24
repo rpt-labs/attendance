@@ -54,7 +54,7 @@ function flattenZoomResults(zoomResults){
   let studentsPresent = []
   // console.log(zoomResults)
 
-  if (zoomResults.length < 1) {
+  if (zoomResults.length < 1 || zoomResults === undefined) {
     console.log("There are no students in any Zoom Room");
     return false;
   }
@@ -64,6 +64,7 @@ function flattenZoomResults(zoomResults){
       let name = student['user_name'].split(' ');
       student.firstName = name[0];
       student.lastName = name[1];
+      student.room = zoomResults[i].topic
       if (name.length > 2) {
        student.moreName = name.slice(2);
       }
@@ -126,7 +127,14 @@ async function runAttendance(zoomResults){
 		// from zutils.getLiveAttendance(runAttendance)
 		for (var j = 0; j < studentsPresent.length; j++) {
 			let studentZoom = studentsPresent[j];
-			let studentZoomName = studentZoom.user_name.replace('.','').toLowerCase();
+      // console.log(studentZoom)
+      studentZoom.firstName = studentZoom.firstName.toLowerCase();
+      studentZoom.user_name = studentZoom.user_name.toLowerCase();
+      if (studentZoom.lastName) {
+        studentZoom.lastName = studentZoom.lastName.toLowerCase();
+      }
+			let studentZoomName = studentZoom.user_name.toLowerCase().replace('.','');
+      // console.log(studentZoomName);
 			// see if zoom name can be found in students full name
 			// first try direct match
 			if (studentFullName.indexOf(studentZoomName) > -1 ) {
@@ -146,7 +154,8 @@ async function runAttendance(zoomResults){
 			} else {
 				//try student's name split by spaces ' '
 				studentNameCollection.forEach((el, idx) => {
-					if (el.indexOf(studentZoomName) > -1 ) {
+					if (studentZoomName.indexOf(el) > -1 ) {
+            console.log("🏄 trying to match", studentZoomName, 'with', el);
 						studentOutput.absent = false;
 						studentOutput.match = `name: ${idx} idx (${el}) of ${studentNameCollection.join(' ')}`
 					}
@@ -154,7 +163,7 @@ async function runAttendance(zoomResults){
 				if (studentEmailCollection) {
 					//try student's email split by periods '.'
 					studentEmailCollection.forEach((el, idx) => {
-						if (el.indexOf(studentZoomName) > -1 ) {
+						if (studentZoomName.indexOf(el) > -1 ) {
 							studentOutput.absent = false;
 							studentOutput.match = `email: ${idx} idx (${el}) of ${studentEmailCollection.join(' ')}`
 						}
@@ -175,7 +184,7 @@ async function runAttendance(zoomResults){
 
 		attendanceObj[el.cohort].push(el)
 	})
-	// console.log(attendanceObj)
+	// console.log(studentsOutput)
 	printAttendance(attendanceObj);
 	return
 }
