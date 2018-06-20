@@ -1,16 +1,17 @@
 // require modules
+require('dotenv').config()
 let request = require ('request');
 let jwt = require('jsonwebtoken');
 let qs = require('querystring');
 //set keys, accts
-let key = 'eCWUVjT_QI21z6r7sltq8A';
-let secret = 'lmOeqSkPi1rBLnih1Z6FZy68XT2SxZkDvFMR';
+let key = process.env.ZOOM_API_KEY;
+let secret = process.env.ZOOM_API_SECRET;
 
 // acctIDs and names
-let acctMain = ['-wVNuo2JRFynXliZS92Wpg','acctMain'];
-let acctBaobob = ['4wJXp2PtRV-2pJomy4FcfQ','acctBaobob'];
-let acctCherryblossom = ['DnSMCDCJQnerUndvwyL9QA','acctCherryblossom'];
-let acctDogwood = ['pg5-t-fZRYauwh9gywSn5w','acctDogwood'];
+let acctMain = [process.env.MAIN_ACCT_ID, 'acctMain'];
+let acctBaobob = [process.env.BAOBOB_ACCT_ID, 'acctBaobob'];
+let acctCherryblossom = [process.env.CHERRYBLOSSOM_ACCT_ID, 'acctCherryblossom'];
+let acctDogwood = [process.env.DOGWOOD_ACCT_ID, 'acctDogwood'];
 
 //set time for token validity
 let convertToSeconds = 1000; // 1000 ms in 1 second
