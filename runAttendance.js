@@ -1,7 +1,8 @@
 var fs = require('fs');
 var Papa = require('papaparse');
 let zutils = require('./zoomHelpers');
-let sampleData = require('./sample-data')
+let sampleData = require('./sample-data');
+let sheetsAuth = require('./sheetsAuth');
 
 var cohortsToCheck = process.argv.slice(2)
 
@@ -17,6 +18,15 @@ let getRptRoster = () => {
     });
   })
 }
+
+/* expected output:
+  { full_name: 'Josh Chen',
+    other_zoom_name: '',
+    cohort: 'RPT08',
+    email: 'josh.jia.chen@gmail.com',
+    student_status: 'active',
+    absent_for_next_class: 'FALSE' },
+*/
 
 //returns collection of students
 async function whoIsHereNow(){
@@ -78,9 +88,26 @@ function flattenZoomResults(zoomResults){
 }
 
 async function runAttendance(zoomResults){
-
-  let allStudents = await getRptRoster();
-
+  // fetch credentials to authorize
+  let credentials = await sheetsAuth.googleSheetsCredentials();
+  // authorize using credentials
+  let authorize = await sheetsAuth.authorize(credentials);
+  // with authorization, fetch sheets data
+  let studentsUnformatted = await sheetsAuth.formatSheetResults(authorize);
+  // format returned data for attendance
+  let studentsFormatted = studentsUnformatted.map(el => {
+    return   {
+        full_name: el[0],
+        other_zoom_name: el[1],
+        cohort: el[2],
+        email: el[3],
+        student_status: el[4],
+        absent_for_next_class: el[5]
+      }
+  })
+  // remove headers
+  let allStudents = studentsFormatted.slice(1)
+  // filter students by cohorts input in terminal
   let studentsExpected = allStudents.filter( stu => {
 			let filters = []
 			filters.push(cohortsToCheck.includes(stu.cohort))

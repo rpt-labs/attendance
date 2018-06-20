@@ -3,3 +3,5 @@
 .env
 *.csv
 sample-data.js
+credentials.json
+google_secret.json
