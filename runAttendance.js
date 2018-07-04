@@ -102,7 +102,7 @@ async function runAttendance(zoomResults){
         cohort: el[2],
         email: el[3],
         student_status: el[4],
-        absent_for_next_class: el[5]
+        // absent_for_next_class: el[5]
       }
   })
   // remove headers
@@ -111,8 +111,8 @@ async function runAttendance(zoomResults){
   let studentsExpected = allStudents.filter( stu => {
 			let filters = []
 			filters.push(cohortsToCheck.includes(stu.cohort))
-			filters.push(stu.student_status === 'active')
-			filters.push(stu.absent_for_next_class === 'FALSE')
+			filters.push(stu.student_status === 'Enrolled')
+			// filters.push(stu.absent_for_next_class === 'FALSE')
     return filters.every(el=>el)
   });
 

@@ -68,7 +68,7 @@ function formatSheetResults(auth) {
     const sheets = google.sheets({version: 'v4', auth});
     sheets.spreadsheets.values.get({
       spreadsheetId: process.env.RPT_ROSTER_SHEET_ID,
-      range: 'rptStudents!A:F',
+      range: 'Attendance Data!A:E',
     }, (err, {data}) => {
       if (err) reject('The API returned an error: ' + err);
       const rows = data.values;
