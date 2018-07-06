@@ -1,9 +1,9 @@
 var fs = require('fs');
 var Papa = require('papaparse');
 let zutils = require('./zoomHelpers');
-let sampleData = require('./sample-data');
+let storeZoomRecords = require('./utils/storeZoomRecords')
 let sheetsAuth = require('./sheetsAuth');
-let DEBUG = false;
+let DEBUG = true;
 var cohortsToCheck = process.argv.slice(2)
 
 let getRptRoster = () => {
@@ -29,36 +29,36 @@ let getRptRoster = () => {
 */
 
 //returns collection of students
-async function whoIsHereNow(){
-  let studentsPresent = [];
-  let snapshot =  await zutils.globalAttendance(acctIdArr);
-
-  for (let i = 0; i < snapshot.length; i++) {
-    let students;
-
-    if (snapshot[i].liveAttendance === undefined){
-      console.log("🐸 🐸 🐸 🐸 🐸 🐸 an acct errored in getting live stats ")
-      students = []
-    } else {
-      students = snapshot[i].liveAttendance.participants
-    }
-
-
-    for (let j = 0; j < students.length; j++) {
-      let student = {
-        zoom_username: students[j].user_name,
-        ip_address: students[j].ip_address,
-        user_id: students[j].user_id,
-        classroom: snapshot[i].topic,
-      }
-
-      studentsPresent.push(student);
-    }//end inner for loop
-  }//end outer for loop
-
-  // console.log(studentsPresent)
-  return studentsPresent;
-}
+// async function whoIsHereNow(){
+//   let studentsPresent = [];
+//   let snapshot =  await zutils.globalAttendance(acctIdArr);
+//
+//   for (let i = 0; i < snapshot.length; i++) {
+//     let students;
+//
+//     if (snapshot[i].liveAttendance === undefined){
+//       console.log("🐸 🐸 🐸 🐸 🐸 🐸 an acct errored in getting live stats ")
+//       students = []
+//     } else {
+//       students = snapshot[i].liveAttendance.participants
+//     }
+//
+//
+//     for (let j = 0; j < students.length; j++) {
+//       let student = {
+//         zoom_username: students[j].user_name,
+//         ip_address: students[j].ip_address,
+//         user_id: students[j].user_id,
+//         classroom: snapshot[i].topic,
+//       }
+//
+//       studentsPresent.push(student);
+//     }//end inner for loop
+//   }//end outer for loop
+//
+//   // console.log(studentsPresent)
+//   return studentsPresent;
+// }
 
 function flattenZoomResults(zoomResults){
   let studentsPresent = []
@@ -75,6 +75,7 @@ function flattenZoomResults(zoomResults){
       student.firstName = name[0];
       student.lastName = name[1];
       student.room = zoomResults[i].topic
+      student.timestamp = new Date(student.join_time).toLocaleString('en-GB', {timezone: "America/Los_Angeles"});
       if (name.length > 2) {
        student.moreName = name.slice(2);
       }
@@ -122,6 +123,7 @@ async function runAttendance(zoomResults){
     return;
   }
 
+  storeZoomRecords(studentsPresent)
 	let studentsOutput = [];
 
   if (DEBUG) {
@@ -144,7 +146,7 @@ async function runAttendance(zoomResults){
 		if (studentEmail.indexOf('.') > -1) {
 			studentEmailCollection = studentEmail.split('.');
 		}
-		
+
 		//create student output object
 		let studentOutput = {
 			name: studentFullName,
