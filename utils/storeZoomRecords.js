@@ -6,37 +6,38 @@ function storeZoomRecords(zoomInput){
 
   fs.readFile('data/zoom_records.csv', 'utf8', (err, data) => {
     let tmp = Papa.parse(data)
-
+    
     let existingCSV = tmp.data.map(stu => {
       return {
-        user_id: stu[1],
-        user_name: stu[2],
-        device: stu[3],
-        ip_address: stu[4],
-        location: stu[5],
-        network_type: stu[6],
-        microphone: stu[7],
-        speaker: stu[8],
-        camera: stu[9],
-        data_center: stu[10],
-        connection_type: stu[11],
-        join_time: stu[12],
-        share_application: stu[13],
-        share_desktop: stu[14],
-        share_whiteboard: stu[15],
-        recording: stu[16],
-        pc_name: stu[17],
-        domain: stu[18],
-        mac_addr: stu[19],
-        harddisk_id: stu[20],
-        version: stu[21],
-        firstName: stu[22],
-        lastName: stu[23],
-        room: stu[24],
-        timestamp: stu[25]
+        user_id: stu[0],
+        user_name: stu[1],
+        device: stu[2],
+        ip_address: stu[3],
+        location: stu[4],
+        network_type: stu[5],
+        microphone: stu[6],
+        speaker: stu[7],
+        camera: stu[8],
+        data_center: stu[19],
+        connection_type: stu[110],
+        join_time: stu[111],
+        share_application: stu[112],
+        share_desktop: stu[113],
+        share_whiteboard: stu[114],
+        recording: stu[115],
+        pc_name: stu[116],
+        domain: stu[117],
+        mac_addr: stu[118],
+        harddisk_id: stu[219],
+        version: stu[220],
+        firstName: stu[221],
+        lastName: stu[222],
+        room: stu[223],
+        timestamp: stu[224]
       }
     }).slice(1) // remove header from parse
 
+    console.log(existingCSV[0]);
     let updatedCSV = existingCSV.concat(zoomInput)
 
     let csv = Papa.unparse(updatedCSV)
