@@ -3,7 +3,7 @@ var Papa = require('papaparse');
 let zutils = require('./zoomHelpers');
 let sampleData = require('./sample-data');
 let sheetsAuth = require('./sheetsAuth');
-
+let DEBUG = false;
 var cohortsToCheck = process.argv.slice(2)
 
 let getRptRoster = () => {
@@ -124,9 +124,11 @@ async function runAttendance(zoomResults){
 
 	let studentsOutput = [];
 
-  console.log("⛱ ⛱ ⛱ ⛱ ⛱ BEGIN STUDENTS PRESENT ⛱ ⛱ ⛱ ⛱ ⛱");
-  console.log(studentsPresent);
-  console.log("⛱ ⛱ ⛱ ⛱ ⛱ END STUDENTS PRESENT ⛱ ⛱ ⛱ ⛱ ⛱");
+  if (DEBUG) {
+    console.log("⛱ ⛱ ⛱ ⛱ ⛱ BEGIN STUDENTS PRESENT ⛱ ⛱ ⛱ ⛱ ⛱");
+    console.log(studentsPresent);
+    console.log("⛱ ⛱ ⛱ ⛱ ⛱ END STUDENTS PRESENT ⛱ ⛱ ⛱ ⛱ ⛱");
+  }
 
 	// loop through student roster, which was filtered into cohorts expected
   for (var i = 0; i < studentsExpected.length; i++) {
@@ -142,11 +144,12 @@ async function runAttendance(zoomResults){
 		if (studentEmail.indexOf('.') > -1) {
 			studentEmailCollection = studentEmail.split('.');
 		}
-		// console.log(student)
+		
 		//create student output object
 		let studentOutput = {
 			name: studentFullName,
 			cohort: student.cohort,
+      room: null,
 			match: null,
 			absent: true,
 		}
@@ -167,17 +170,21 @@ async function runAttendance(zoomResults){
 			if (studentFullName.indexOf(studentZoomName) > -1 ) {
 					studentOutput.absent = false;
 					studentOutput.match = `full name: ${studentFullName}`
+          studentOutput.room = studentZoom.room
 			//try other name field in CSV
 			} else if (studentOtherName.indexOf(studentZoomName) > -1 ) {
 					studentOutput.absent = false;
 					studentOutput.match = `other name: ${studentOtherName}`
+          studentOutput.room = studentZoom.room
 			//try email before @
 			} else if (!studentEmail && studentEmail.indexOf(studentZoomName) > -1 ) {
 					studentOutput.absent = false;
 					studentOutput.match = `email: ${studentEmail}`
+          studentOutput.room = studentZoom.room
 			} else if (studentConcatName.indexOf(studentZoomName) > -1 ) {
 					studentOutput.absent = false;
 					studentOutput.match = `concatName: ${studentConcatName}`
+          studentOutput.room = studentZoom.room
 			} else {
 				//try student's name split by spaces ' '
 				studentNameCollection.forEach((el, idx) => {
@@ -185,6 +192,7 @@ async function runAttendance(zoomResults){
             console.log("🏄 trying to match", studentZoomName, 'with', el);
 						studentOutput.absent = false;
 						studentOutput.match = `name: ${idx} idx (${el}) of ${studentNameCollection.join(' ')}`
+            studentOutput.room = studentZoom.room
 					}
 				})
 				if (studentEmailCollection) {
@@ -193,6 +201,7 @@ async function runAttendance(zoomResults){
 						if (studentZoomName.indexOf(el) > -1 ) {
 							studentOutput.absent = false;
 							studentOutput.match = `email: ${idx} idx (${el}) of ${studentEmailCollection.join(' ')}`
+              studentOutput.room = studentZoom.room
 						}
 					})
 				}
@@ -218,16 +227,17 @@ async function runAttendance(zoomResults){
 
 function printAttendance(attendanceObj){
   for (let cohort in attendanceObj) {
-    console.log(' ')
+
     console.log(`--------------------- ${cohort} ---------------------`);
     for (let i = 0; i < attendanceObj[cohort].length; i++) {
+      let stuObj = attendanceObj[cohort][i]
       if ( !attendanceObj[cohort][i].absent ) {
-        console.log( `${attendanceObj[cohort][i].name} matched ${attendanceObj[cohort][i].match} √`  )
+        console.log( `${stuObj.name}\n matched ${stuObj.match}\n in ${stuObj.room} ✅\n`  )
       } else {
         let stu = attendanceObj[cohort][i];
         let len = 49 - ( attendanceObj[cohort][i].name.length + 4 )
         let buffer = Array(len).join('-')
-        console.log( stu.name, `<---${buffer}  ABSENT`  )
+        console.log( stu.name, `<---${buffer}  ABSENT ❌`  )
       }
     }
   }
