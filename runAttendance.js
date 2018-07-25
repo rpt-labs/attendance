@@ -5,10 +5,11 @@ let storeZoomRecords = require('./utils/storeZoomRecords')
 let flattenZoomResults = require('./utils/flattenZoomResults')
 let printAttendance = require('./utils/printAttendance')
 let matchStudents = require('./utils/matchStudents')
+let writeToGoogleSheets = require('./utils/writeToGoogleSheets')
 let formatStudentsByCohort = require('./utils/formatStudentsByCohort')
 let filterToStudentsExpected = require('./utils/filterToStudentsExpected')
 let sheetsAuth = require('./sheetsAuth');
-let DEBUG = true;
+let DEBUG = false;
 var cohortsToCheck = process.argv.slice(2)
 
 
@@ -36,6 +37,8 @@ async function runAttendance(zoomResults){
   let studentsExpected = filterToStudentsExpected(allStudents, cohortsToCheck)
   // take zoom results and flatten to single array
   let studentsPresent = flattenZoomResults(zoomResults);
+  // write raw data to googly sheets
+  writeToGoogleSheets(studentsPresent)
   // break if there is no one present in zoom
   if (!studentsPresent) return
   // log if DEBUG is true

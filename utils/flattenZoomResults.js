@@ -22,7 +22,7 @@ function flattenZoomResults(zoomResults){
     })
     studentsPresent = studentsPresent.concat(session)
   }
-
+  console.log(studentsPresent);
   return studentsPresent
 }
 

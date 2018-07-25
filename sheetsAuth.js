@@ -4,7 +4,7 @@ const readline = require('readline');
 const {google} = require('googleapis');
 
 // If modifying these scopes, delete credentials.json.
-const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
+const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 const TOKEN_PATH = 'credentials.json';
 
 function googleSheetsCredentials() {
@@ -26,6 +26,8 @@ async function authorize(credentials) {
   return new Promise( (resolve, reject) => {
     fs.readFile(TOKEN_PATH, async (err, token) => {
       if (err) {
+        console.log('🐸');
+        console.log(err);
         let newToken = await getNewToken(oAuth2Client);
         resolve(newToken);
       } else {
@@ -41,6 +43,8 @@ function getNewToken(oAuth2Client) {
     access_type: 'offline',
     scope: SCOPES,
   });
+  console.log('🔥');
+  console.log(authUrl);
   console.log('Authorize this app by visiting this url:', authUrl);
   const rl = readline.createInterface({
     input: process.stdin,
@@ -81,10 +85,21 @@ function formatSheetResults(auth) {
   })
 }
 
+function writeSheetResults(auth, body) {
+    const sheets = google.sheets({version: 'v4', auth});
+  sheets.spreadsheets.values.append({
+    spreadsheetId: process.env.RPT_ATTENDANCE_OUTPUT,
+    range: 'Raw Data!A:AA',
+    valueInputOption: 'RAW',
+    resource: {values: body}
+  })
+}
+
 
 
 module.exports = {
   googleSheetsCredentials: googleSheetsCredentials,
   authorize: authorize,
   formatSheetResults: formatSheetResults,
+  writeSheetResults: writeSheetResults,
 }

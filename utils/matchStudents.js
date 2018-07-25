@@ -16,14 +16,14 @@ function matchStudents(studentsExpected, studentsPresent) {
 			studentEmailCollection = studentEmail.split('.');
 		}
 
-    console.log('student', student);
-    console.log('studentFullName', studentFullName);
-    console.log('studentNameCollection', studentNameCollection);
-    console.log('studentOtherName', studentOtherName);
-    console.log('studentFirstInitialLastName', studentFirstInitialLastName);
-    console.log('studentConcatName', studentConcatName);
-    console.log('studentEmail', studentEmail);
-    console.log('studentEmailCollection', studentEmailCollection);
+    // console.log('student', student);
+    // console.log('studentFullName', studentFullName);
+    // console.log('studentNameCollection', studentNameCollection);
+    // console.log('studentOtherName', studentOtherName);
+    // console.log('studentFirstInitialLastName', studentFirstInitialLastName);
+    // console.log('studentConcatName', studentConcatName);
+    // console.log('studentEmail', studentEmail);
+    // console.log('studentEmailCollection', studentEmailCollection);
 
 		//create student output object
 		let studentOutput = {
@@ -38,8 +38,8 @@ function matchStudents(studentsExpected, studentsPresent) {
 		for (var j = 0; j < studentsPresent.length; j++) {
 			let studentZoom = studentsPresent[j];
 
-      console.log('studentZoom 🏄🏄🏄🏄🏄🏄🏄')
-      console.log(studentZoom)
+      // console.log('studentZoom 🏄🏄🏄🏄🏄🏄🏄')
+      // console.log(studentZoom)
       studentZoom.firstName = studentZoom.firstName.toLowerCase();
       studentZoom.user_name = studentZoom.user_name.toLowerCase();
       if (studentZoom.lastName) {
