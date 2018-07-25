@@ -16,6 +16,15 @@ function matchStudents(studentsExpected, studentsPresent) {
 			studentEmailCollection = studentEmail.split('.');
 		}
 
+    console.log('student', student);
+    console.log('studentFullName', studentFullName);
+    console.log('studentNameCollection', studentNameCollection);
+    console.log('studentOtherName', studentOtherName);
+    console.log('studentFirstInitialLastName', studentFirstInitialLastName);
+    console.log('studentConcatName', studentConcatName);
+    console.log('studentEmail', studentEmail);
+    console.log('studentEmailCollection', studentEmailCollection);
+
 		//create student output object
 		let studentOutput = {
 			name: studentFullName,
@@ -28,7 +37,9 @@ function matchStudents(studentsExpected, studentsPresent) {
 		// from zutils.getLiveAttendance(runAttendance)
 		for (var j = 0; j < studentsPresent.length; j++) {
 			let studentZoom = studentsPresent[j];
-      // console.log(studentZoom)
+
+      console.log('studentZoom 🏄🏄🏄🏄🏄🏄🏄')
+      console.log(studentZoom)
       studentZoom.firstName = studentZoom.firstName.toLowerCase();
       studentZoom.user_name = studentZoom.user_name.toLowerCase();
       if (studentZoom.lastName) {
@@ -56,27 +67,28 @@ function matchStudents(studentsExpected, studentsPresent) {
 					studentOutput.absent = false;
 					studentOutput.match = `concatName: ${studentConcatName}`
           studentOutput.room = studentZoom.room
-			} else {
-				//try student's name split by spaces ' '
-				studentNameCollection.forEach((el, idx) => {
-					if (studentZoomName.indexOf(el) > -1 ) {
-            console.log("🏄 trying to match", studentZoomName, 'with', el);
-						studentOutput.absent = false;
-						studentOutput.match = `name: ${idx} idx (${el}) of ${studentNameCollection.join(' ')}`
-            studentOutput.room = studentZoom.room
-					}
-				})
-				if (studentEmailCollection) {
-					//try student's email split by periods '.'
-					studentEmailCollection.forEach((el, idx) => {
-						if (studentZoomName.indexOf(el) > -1 ) {
-							studentOutput.absent = false;
-							studentOutput.match = `email: ${idx} idx (${el}) of ${studentEmailCollection.join(' ')}`
-              studentOutput.room = studentZoom.room
-						}
-					})
-				}
-			}
+      }
+			// } else {
+			// 	//try student's name split by spaces ' '
+			// 	studentNameCollection.forEach((el, idx) => {
+			// 		if (studentZoomName.indexOf(el) > -1 ) {
+      //       console.log("🏄 trying to match", studentZoomName, 'with', el);
+			// 			studentOutput.absent = false;
+			// 			studentOutput.match = `name: ${idx} idx (${el}) of ${studentNameCollection.join(' ')}`
+      //       studentOutput.room = studentZoom.room
+			// 		}
+			// 	})
+			// 	if (studentEmailCollection) {
+			// 		//try student's email split by periods '.'
+			// 		studentEmailCollection.forEach((el, idx) => {
+			// 			if (studentZoomName.indexOf(el) > -1 ) {
+			// 				studentOutput.absent = false;
+			// 				studentOutput.match = `email: ${idx} idx (${el}) of ${studentEmailCollection.join(' ')}`
+      //         studentOutput.room = studentZoom.room
+			// 			}
+			// 		})
+			// 	}
+			// }
 		}
 
 		studentsOutput.push(studentOutput)
