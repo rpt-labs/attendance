@@ -10,7 +10,7 @@ let formatStudentsByCohort = require('./utils/formatStudentsByCohort')
 let filterToStudentsExpected = require('./utils/filterToStudentsExpected')
 let sheetsAuth = require('./sheetsAuth');
 let sampleData = require('./utils/sampleData.js');
-let DEBUG = true;
+let DEBUG = false;
 var optionalParams = process.argv.slice(2)
 var recordToGoogle = optionalParams[0] === 'LOG'
 

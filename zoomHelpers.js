@@ -36,13 +36,6 @@ function delay(ms, cb){
   setTimeout(cb,ms)
 }
 
-//1 second promise delay helper function. possibly not needed.
-function oneSecondDelay() {
-  return new Promise(resolve => {
-    setTimeout(()=>{resolve()}, 1000)
-  })
-}
-
 //zoom api call to get live meetings held by acctId
 function getAllLiveMeetings(acctId) {
   let zoomOptions = {
