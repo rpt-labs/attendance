@@ -2,6 +2,6 @@
 /package-lock.json/
 .env
 *.csv
-sample-data.js
+*/sampleData.js
 credentials.json
 google_secret.json

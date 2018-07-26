@@ -1,4 +1,10 @@
 function flattenZoomResults(zoomResults){
+
+  if (zoomResults[0].room) {
+    console.log('🧚‍ running sample data');
+    return zoomResults
+  }
+
   let studentsPresent = []
   // console.log(zoomResults)
 
@@ -22,7 +28,7 @@ function flattenZoomResults(zoomResults){
     })
     studentsPresent = studentsPresent.concat(session)
   }
-  console.log(studentsPresent);
+
   return studentsPresent
 }
 

@@ -1,6 +1,8 @@
-function matchStudents(studentsExpected, studentsPresent) {
+var DEBUG = false
 
+function matchStudents(studentsExpected, studentsPresent) {
   let studentsOutput = [];
+  if (DEBUG) console.log('----------------- matchStudents.js -----------------');
   // loop through student roster, which was filtered into cohorts expected
   for (var i = 0; i < studentsExpected.length; i++) {
 		// create variables
@@ -16,14 +18,16 @@ function matchStudents(studentsExpected, studentsPresent) {
 			studentEmailCollection = studentEmail.split('.');
 		}
 
-    // console.log('student', student);
-    // console.log('studentFullName', studentFullName);
-    // console.log('studentNameCollection', studentNameCollection);
-    // console.log('studentOtherName', studentOtherName);
-    // console.log('studentFirstInitialLastName', studentFirstInitialLastName);
-    // console.log('studentConcatName', studentConcatName);
-    // console.log('studentEmail', studentEmail);
-    // console.log('studentEmailCollection', studentEmailCollection);
+    if (DEBUG) {
+    console.log('---------------- vars ----------------');
+    console.log('student', student);
+    console.log('studentFullName', studentFullName);
+    console.log('studentNameCollection', studentNameCollection);
+    console.log('studentOtherName', studentOtherName);
+    console.log('studentFirstInitialLastName', studentFirstInitialLastName);
+    console.log('studentConcatName', studentConcatName);
+    console.log('studentEmail', studentEmail);
+    }
 
 		//create student output object
 		let studentOutput = {
@@ -31,64 +35,61 @@ function matchStudents(studentsExpected, studentsPresent) {
 			cohort: student.cohort,
       room: null,
 			match: null,
+      matchReliability: null,
 			absent: true,
 		}
 		// loop through studentsPresent, a flat collection originating
-		// from zutils.getLiveAttendance(runAttendance)
+		// from zutils.getLiveAttendance(runAttendance).
+    // this data is the same shape as utils/sampleData.js
 		for (var j = 0; j < studentsPresent.length; j++) {
 			let studentZoom = studentsPresent[j];
 
-      // console.log('studentZoom 🏄🏄🏄🏄🏄🏄🏄')
-      // console.log(studentZoom)
+      // convert all names to lowercase where applicable
       studentZoom.firstName = studentZoom.firstName.toLowerCase();
       studentZoom.user_name = studentZoom.user_name.toLowerCase();
       if (studentZoom.lastName) {
         studentZoom.lastName = studentZoom.lastName.toLowerCase();
       }
 			let studentZoomName = studentZoom.user_name.toLowerCase().replace('.','');
-      // console.log(studentZoomName);
-			// see if zoom name can be found in students full name
+
+
 			// first try direct match
-			if (studentFullName.indexOf(studentZoomName) > -1 ) {
-					studentOutput.absent = false;
-					studentOutput.match = `full name: ${studentFullName}`
-          studentOutput.room = studentZoom.room
-			//try other name field in CSV
+      if (studentFullName === studentZoomName) {
+          studentOutput.absent = false;
+          studentOutput.matchReliability = 100;
+          studentOutput.match = `full name: ${studentFullName}`;
+          studentOutput.room = studentZoom.room;
+
+			// try ther zoom username if different
 			} else if (studentOtherName.indexOf(studentZoomName) > -1 ) {
 					studentOutput.absent = false;
-					studentOutput.match = `other name: ${studentOtherName}`
-          studentOutput.room = studentZoom.room
-			//try email before @
+          studentOutput.matchReliability = 100;
+					studentOutput.match = `other name: ${studentOtherName}`;
+          studentOutput.room = studentZoom.room;
+
+			// try email before @
 			} else if (!studentEmail && studentEmail.indexOf(studentZoomName) > -1 ) {
 					studentOutput.absent = false;
-					studentOutput.match = `email: ${studentEmail}`
-          studentOutput.room = studentZoom.room
+          studentOutput.matchReliability = 100;
+					studentOutput.match = `email: ${studentEmail}`;
+          studentOutput.room = studentZoom.room;
+
+      // try full name concatenated and without spaces
 			} else if (studentConcatName.indexOf(studentZoomName) > -1 ) {
 					studentOutput.absent = false;
-					studentOutput.match = `concatName: ${studentConcatName}`
-          studentOutput.room = studentZoom.room
+          studentOutput.matchReliability = 100;
+					studentOutput.match = `concatName: ${studentConcatName}`;
+          studentOutput.room = studentZoom.room;
+
+        // try to match zoom name within full name (this can be problematic)
+      } else if (studentFullName.indexOf(studentZoomName) > -1 ) {
+          studentOutput.absent = false;
+          studentOutput.matchReliability = 50;
+          studentOutput.match = `within full name: ${studentFullName} with ${studentZoomName}`;
+          studentOutput.room = studentZoom.room;
+
       }
-			// } else {
-			// 	//try student's name split by spaces ' '
-			// 	studentNameCollection.forEach((el, idx) => {
-			// 		if (studentZoomName.indexOf(el) > -1 ) {
-      //       console.log("🏄 trying to match", studentZoomName, 'with', el);
-			// 			studentOutput.absent = false;
-			// 			studentOutput.match = `name: ${idx} idx (${el}) of ${studentNameCollection.join(' ')}`
-      //       studentOutput.room = studentZoom.room
-			// 		}
-			// 	})
-			// 	if (studentEmailCollection) {
-			// 		//try student's email split by periods '.'
-			// 		studentEmailCollection.forEach((el, idx) => {
-			// 			if (studentZoomName.indexOf(el) > -1 ) {
-			// 				studentOutput.absent = false;
-			// 				studentOutput.match = `email: ${idx} idx (${el}) of ${studentEmailCollection.join(' ')}`
-      //         studentOutput.room = studentZoom.room
-			// 			}
-			// 		})
-			// 	}
-			// }
+
 		}
 
 		studentsOutput.push(studentOutput)

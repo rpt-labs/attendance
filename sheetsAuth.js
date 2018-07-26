@@ -43,9 +43,7 @@ function getNewToken(oAuth2Client) {
     access_type: 'offline',
     scope: SCOPES,
   });
-  console.log('🔥');
-  console.log(authUrl);
-  console.log('Authorize this app by visiting this url:', authUrl);
+  console.log('😎 Authorize this app by visiting this url:', authUrl);
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -86,7 +84,7 @@ function formatSheetResults(auth) {
 }
 
 function writeSheetResults(auth, body) {
-    const sheets = google.sheets({version: 'v4', auth});
+  const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.append({
     spreadsheetId: process.env.RPT_ATTENDANCE_OUTPUT,
     range: 'Raw Data!A:AA',

@@ -9,8 +9,11 @@ let writeToGoogleSheets = require('./utils/writeToGoogleSheets')
 let formatStudentsByCohort = require('./utils/formatStudentsByCohort')
 let filterToStudentsExpected = require('./utils/filterToStudentsExpected')
 let sheetsAuth = require('./sheetsAuth');
-let DEBUG = false;
-var cohortsToCheck = process.argv.slice(2)
+let sampleData = require('./utils/sampleData.js');
+let DEBUG = true;
+var optionalParams = process.argv.slice(2)
+var recordToGoogle = optionalParams[0] === 'LOG'
+
 
 
 async function runAttendance(zoomResults){
@@ -34,11 +37,11 @@ async function runAttendance(zoomResults){
   // remove headers
   let allStudents = studentsFormatted.slice(1)
   // filter students by cohorts input in terminal
-  let studentsExpected = filterToStudentsExpected(allStudents, cohortsToCheck)
+  let studentsExpected = filterToStudentsExpected(allStudents, optionalParams)
   // take zoom results and flatten to single array
   let studentsPresent = flattenZoomResults(zoomResults);
   // write raw data to googly sheets
-  writeToGoogleSheets(studentsPresent)
+  if (recordToGoogle) writeToGoogleSheets(studentsPresent)
   // break if there is no one present in zoom
   if (!studentsPresent) return
   // log if DEBUG is true
@@ -53,6 +56,8 @@ async function runAttendance(zoomResults){
 	return
 }
 
-
-
-zutils.getLiveAttendance(runAttendance)
+if (DEBUG) {
+  runAttendance(sampleData)
+} else {
+  zutils.getLiveAttendance(runAttendance)
+}

@@ -2,6 +2,7 @@ let sheetsAuth = require('../sheetsAuth')
 async function writeToGoogleSheets(input) {
   // create global Google Sheets 'values' output
   var values = [];
+  // map
   input.forEach(obj => {
   var value = []
   // create most verbose zoom object
@@ -42,8 +43,7 @@ async function writeToGoogleSheets(input) {
   values.push(value)
 
   })
-  console.log('values, 🏍🏍🏍🏍🏍🏍🏍🏍🏍🏍');
-  console.log(values);
+
   // fetch credentials to authorize
   let credentials = await sheetsAuth.googleSheetsCredentials();
 
