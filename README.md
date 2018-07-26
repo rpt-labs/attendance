@@ -15,6 +15,7 @@
 
 ### Example Usage:
 `node runAttendance.js RPT05 RPT06` _// returns attendance for cohorts RPT05 and RPT06_
+
 `node runAttendance.js LOG RPT05 RPT06` _// logs all zoom data fetched to google sheets and returns attendance for cohorts RPT05 and RPT06_
 
 NOTE: you must be running node 8.11 and above for this script to work
