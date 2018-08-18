@@ -5,3 +5,4 @@
 */sampleData.js
 credentials.json
 google_secret.json
+.DS_Store

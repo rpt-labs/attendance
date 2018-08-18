@@ -12,6 +12,10 @@ let acctMain = [process.env.MAIN_ACCT_ID, 'acctMain'];
 let acctBaobob = [process.env.BAOBOB_ACCT_ID, 'acctBaobob'];
 let acctCherryblossom = [process.env.CHERRYBLOSSOM_ACCT_ID, 'acctCherryblossom'];
 let acctDogwood = [process.env.DOGWOOD_ACCT_ID, 'acctDogwood'];
+let acctEucalyptus = [process.env.EUCALYPTUS_ACCT_ID, 'acctEucalyptus'];
+let acctFir = [process.env.FIR_ACCT_ID, 'acctEucalyptus'];
+let acctAcacia = [process.env.ACACIA_ACCT_ID, 'acctEucalyptus'];
+
 
 //set time for token validity
 let convertToSeconds = 1000; // 1000 ms in 1 second
@@ -29,7 +33,7 @@ let token = jwt.sign(payload, secret);
 let results = [];
 
 //accts in collection
-let acctIdArr = [ acctBaobob, acctCherryblossom, acctDogwood, acctMain ];
+let acctIdArr = [ acctBaobob, acctCherryblossom, acctDogwood, acctMain, acctEucalyptus, acctFir, acctAcacia ];
 
 //setTimeout helper function
 function delay(ms, cb){
@@ -139,6 +143,9 @@ function getLiveAttendance(cb) {
   delay(2100, ()=>{globalAttendance(acctIdArr[1],2)})
   delay(3200, ()=>{globalAttendance(acctIdArr[2],3)})
   delay(4300, ()=>{globalAttendance(acctIdArr[3],4)})
+  delay(5400, ()=>{globalAttendance(acctIdArr[4],5)})
+  delay(6500, ()=>{globalAttendance(acctIdArr[5],6)})
+  delay(7600, ()=>{globalAttendance(acctIdArr[6],7)})
   delay(8000, ()=>{resultsLoop(cb)})
 }
 //zoom api call to fetch all room instances that were held within a certain timeframe
