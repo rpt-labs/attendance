@@ -24,6 +24,7 @@ function determineColor(matchReliability) {
 
 function printAttendance(attendanceObj){
   // iterate across cohorts
+  let absentStudents = [];
   for (let cohort in attendanceObj) {
 
     console.log( determineColor('title'), `--------------------- ${cohort} ---------------------`);
@@ -39,9 +40,13 @@ function printAttendance(attendanceObj){
         let len = 49 - ( attendanceObj[cohort][i].name.length + 4 )
         let buffer = Array(len).join('-')
         console.log( "\x1b[31m", stu.name, `<---${buffer}  ABSENT ❌`  )
+        absentStudents.push(stu.name + `<---${buffer}  ABSENT ❌`);
       }
     }
   }
+  console.log("ABSENT:");
+  absentStudents.forEach(student => console.log("\x1b[31m", student));
+  console.log("\x1b[0m", '');
 }
 
 module.exports = printAttendance;
