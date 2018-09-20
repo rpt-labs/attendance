@@ -89,7 +89,7 @@ function getAttendanceDatas(auth) {
     const sheets = google.sheets({version: 'v4', auth});
     sheets.spreadsheets.values.get({
       spreadsheetId: process.env.RPT_ATTENDANCE_OUTPUT,
-      range: 'Raw Data!A1:AA3',
+      range: 'Raw Data!A1:AA3', // A1:AA3 is a test range
     }, (err, {data}) => {
       if (err) reject('The API returned an error: ' + err);
       console.log('--------------------', data);
