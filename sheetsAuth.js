@@ -83,6 +83,28 @@ function formatSheetResults(auth) {
   })
 }
 
+/* for getting datas from zoom raw data output sheet */
+function getAttendanceDatas(auth) {
+  return new Promise( (resolve, reject) => {
+    const sheets = google.sheets({version: 'v4', auth});
+    sheets.spreadsheets.values.get({
+      spreadsheetId: process.env.RPT_ATTENDANCE_OUTPUT,
+      range: 'Raw Data!A1:AA3',
+    }, (err, {data}) => {
+      if (err) reject('The API returned an error: ' + err);
+      console.log('--------------------', data);
+      const rows = data.values;
+      console.log(data.values);
+      if (rows.length) {
+        resolve(rows)
+      } else {
+        resolve('No data found.');
+      }
+    });
+  })
+}
+/* end */
+
 function writeSheetResults(auth, body) {
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.append({
@@ -93,11 +115,10 @@ function writeSheetResults(auth, body) {
   })
 }
 
-
-
 module.exports = {
   googleSheetsCredentials: googleSheetsCredentials,
   authorize: authorize,
   formatSheetResults: formatSheetResults,
   writeSheetResults: writeSheetResults,
+  getAttendanceDatas: getAttendanceDatas,
 }
