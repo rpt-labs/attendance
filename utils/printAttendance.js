@@ -17,10 +17,9 @@ function determineColor(matchReliability) {
     '50'   : color.yellow,
     '100'  : color.green
   }
-  
+
   return matchColor[reliability] ? matchColor[reliability] : color.magenta
 }
-
 
 function printAttendance(attendanceObj){
   // iterate across cohorts

@@ -1,5 +1,4 @@
 function flattenZoomResults(zoomResults){
-
   if (zoomResults[0].room) {
     console.log('🧚‍ running sample data');
     return zoomResults
