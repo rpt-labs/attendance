@@ -5,7 +5,6 @@ function findAbsentStudents(attendanceObj) {
   for (let cohort in attendanceObj) {
     for (let i = 0; i < attendanceObj[cohort].length; i++) {
       let stuObj = attendanceObj[cohort][i]
-      // console.log(stuObj);
       if ( attendanceObj[cohort][i].absent ) {
         delinquents.push(stuObj);
       }
@@ -80,7 +79,6 @@ async function writeAttendanceToGoogleSheets(input) {
   let authorize = await sheetsAuth.authorize(credentials);
 
   sheetsAuth.writeSheetResults(authorize, values, process.env.RPT_ATTENDANCE_OUTPUT, 'Raw Data!A:AA');
-
 }
 
 module.exports = writeAttendanceToGoogleSheets;
