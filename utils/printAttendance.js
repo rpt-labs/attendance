@@ -17,10 +17,9 @@ function determineColor(matchReliability) {
     '50'   : color.yellow,
     '100'  : color.green
   }
-  
+
   return matchColor[reliability] ? matchColor[reliability] : color.magenta
 }
-
 
 function printAttendance(attendanceObj){
   // iterate across cohorts
@@ -30,7 +29,6 @@ function printAttendance(attendanceObj){
     // iterate across students within cohort
     for (let i = 0; i < attendanceObj[cohort].length; i++) {
       let stuObj = attendanceObj[cohort][i]
-      // console.log(stuObj);
       if ( !attendanceObj[cohort][i].absent ) {
         let printColor = determineColor(stuObj.matchReliability)
         console.log( printColor, `${stuObj.name}\n matched ${stuObj.match}\n in ${stuObj.room} ✅\n`  )
