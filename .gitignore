@@ -6,3 +6,4 @@ package-lock.json/
 credentials.json
 google_secret.json
 .DS_Store
+public/
