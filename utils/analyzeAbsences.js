@@ -7,28 +7,24 @@ const getAbsenceData = async() => {
   let authorize = await sheetsAuth.authorize(credentials);
   // with authorization, fetch absence data
   let absenceData = await sheetsAuth.formatSheetResults(authorize, process.env.RPT_ATTENDANCE_OUTPUT, 'Absences!A:C');
-  console.log(absenceData);
   return absenceData.slice(1);
 }
 
 const countAbsences = (absenceData) => {
-  console.log(absenceData);
   let absences = {};
   let values = [];
   for (var i = 0; i < absenceData.length; i++) {
     let student = absenceData[i];
-    console.log(student)
     if (!absences[student]) {
       absences[student[0]] = 1;
     } else {
       absences[student[0]] += 1;
     }
   }
-  console.log("absences",absences)
   for (let data in absences) {
     values.push([data, absences[data]]);
   }
-  console.log(values);
+
   return values;
 }
 

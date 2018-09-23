@@ -23,7 +23,7 @@ async function writeAbsencesToGoogleSheets(attendanceObj) {
   let credentials = await sheetsAuth.googleSheetsCredentials();
   // authorize using credentials
   let authorize = await sheetsAuth.authorize(credentials);
-  console.log("the absent students, before writing to google sheets", absentees);
+  console.log("the absent students, before writing to google sheets", absentees.map(x => x.name));
   sheetsAuth.writeSheetResults(authorize, values, process.env.RPT_ATTENDANCE_OUTPUT, 'Absences!A:C');
 }
 
