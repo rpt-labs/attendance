@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import CohortChart from './CohortChart';
-import CohortTable from './CohortTable';
+import React from 'react';
 import CohortCards from './CohortCards';
 
 class App extends React.Component {
@@ -27,26 +25,16 @@ class App extends React.Component {
           {id: 16,name: "Great Like", github: "chicken", absencePoints: 6, health: 86},
           {id: 17,name: "Kaladin Stormblessed", github: "protects", absencePoints: 8, health: 86},
           {id: 18,name: "Cheese Cake", github: "toCakeOrToTart", absencePoints: 12, health: 86},
-
         ]}
-
     };
   }
 
   render() {
     return (
     <div className="ui container">
-      {/* <div className="ui stackable stretched four column grid"> */}
-        {/* <div className="column">
-          <div className="ui header cohort-title">{this.state.cohort.name}</div>
-          <CohortTable students={this.state.cohort.students} name={this.state.cohort.name}/>
-        </div> */}
-
-          <div className="ui header cohort-title">{this.state.cohort.name}</div>
-          <CohortCards students={this.state.cohort.students} name={this.state.cohort.name}/>
-
-      </div>
-  //  </div>
+      <div className="ui header cohort-title">{this.state.cohort.name}</div>
+      <CohortCards students={this.state.cohort.students} name={this.state.cohort.name}/>
+    </div>
     )
   }
 }

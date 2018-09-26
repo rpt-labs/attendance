@@ -1,5 +1,5 @@
-//this shows attendance data by student in chart form
-//clicking shows a detailed Student view
+//this shows overall health and stats, including attendance points
+//clicking through shows a detailed Student view
 import React from 'react';
 
 const StudentCard = (props) => {
