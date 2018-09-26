@@ -2,7 +2,6 @@ require('dotenv').config();
 var express = require('express');
 var port = process.env.SERVER_PORT;
 const { getAbsenceData } = require('./utils/analyzeAbsences');
-const db = require('./db/index');
 
 var app = express();
 app.use(express.static('public'));
