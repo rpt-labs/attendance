@@ -1,5 +1,33 @@
 let sheetsAuth = require('../sheetsAuth')
-async function writeToGoogleSheets(input) {
+
+function findAbsentStudents(attendanceObj) {
+  let delinquents = [];
+  for (let cohort in attendanceObj) {
+    for (let i = 0; i < attendanceObj[cohort].length; i++) {
+      let stuObj = attendanceObj[cohort][i]
+      if ( attendanceObj[cohort][i].absent ) {
+        delinquents.push(stuObj);
+      }
+    }
+  }
+  return delinquents;
+}
+async function writeAbsencesToGoogleSheets(attendanceObj) {
+  // create global Google Sheets 'values' output
+  var values = [];
+  let absentees = findAbsentStudents(attendanceObj);
+  let today = Date();
+
+  absentees.forEach(obj => values.push([obj.name, obj.cohort, today]));
+  // fetch credentials to authorize
+  let credentials = await sheetsAuth.googleSheetsCredentials();
+  // authorize using credentials
+  let authorize = await sheetsAuth.authorize(credentials);
+  console.log("the absent students, before writing to google sheets", absentees.map(x => x.name));
+  sheetsAuth.writeSheetResults(authorize, values, process.env.RPT_ATTENDANCE_OUTPUT, 'Absences!A:C');
+}
+
+async function writeAttendanceToGoogleSheets(input) {
   // create global Google Sheets 'values' output
   var values = [];
   // map
@@ -50,8 +78,8 @@ async function writeToGoogleSheets(input) {
   // authorize using credentials
   let authorize = await sheetsAuth.authorize(credentials);
 
-  sheetsAuth.writeSheetResults(authorize, values)
-
+  sheetsAuth.writeSheetResults(authorize, values, process.env.RPT_ATTENDANCE_OUTPUT, 'Raw Data!A:AA');
 }
 
-module.exports = writeToGoogleSheets
+module.exports = writeAttendanceToGoogleSheets;
+module.exports = writeAbsencesToGoogleSheets;

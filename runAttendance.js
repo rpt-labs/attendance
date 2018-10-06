@@ -5,11 +5,12 @@ let storeZoomRecords = require('./utils/storeZoomRecords')
 let flattenZoomResults = require('./utils/flattenZoomResults')
 let printAttendance = require('./utils/printAttendance')
 let matchStudents = require('./utils/matchStudents')
-let writeToGoogleSheets = require('./utils/writeToGoogleSheets')
+let writeAttendanceToGoogleSheets = require('./utils/writeToGoogleSheets')
+let writeAbsencesToGoogleSheets = require('./utils/writeToGoogleSheets')
 let formatStudentsByCohort = require('./utils/formatStudentsByCohort')
 let filterToStudentsExpected = require('./utils/filterToStudentsExpected')
 let sheetsAuth = require('./sheetsAuth');
-let sampleData = require('./utils/sampleData.js');
+//let sampleData = require('./utils/sampleData.js');
 let DEBUG = false;
 var optionalParams = process.argv.slice(2)
 var recordToGoogle = optionalParams[0] === 'LOG'
@@ -22,7 +23,7 @@ async function runAttendance(zoomResults){
   // authorize using credentials
   let authorize = await sheetsAuth.authorize(credentials);
   // with authorization, fetch sheets data
-  let studentsUnformatted = await sheetsAuth.formatSheetResults(authorize);
+  let studentsUnformatted = await sheetsAuth.formatSheetResults(authorize, process.env.RPT_ROSTER_SHEET_ID, 'Attendance Data!A:E');
   // format returned data for attendance
   let studentsFormatted = studentsUnformatted.map(el => {
     return   {
@@ -40,8 +41,8 @@ async function runAttendance(zoomResults){
   let studentsExpected = filterToStudentsExpected(allStudents, optionalParams)
   // take zoom results and flatten to single array
   let studentsPresent = flattenZoomResults(zoomResults);
-  // write raw data to googly sheets
-  if (recordToGoogle) writeToGoogleSheets(studentsPresent)
+  // write raw attendance data to googly sheets
+  if (recordToGoogle) writeAttendanceToGoogleSheets(studentsPresent);
   // break if there is no one present in zoom
   if (!studentsPresent) return
   // log if DEBUG is true
@@ -52,7 +53,9 @@ async function runAttendance(zoomResults){
   // modify output by cohort to print results by cohort
 	let attendanceObj = formatStudentsByCohort(studentsOutput);
   // send for console log
-	printAttendance(attendanceObj);
+  //write absence data to googly sheets
+  if (recordToGoogle) writeAbsencesToGoogleSheets(attendanceObj);
+  printAttendance(attendanceObj);
 	return
 }
 

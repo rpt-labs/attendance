@@ -65,13 +65,10 @@ function getNewToken(oAuth2Client) {
   });
 }
 
-function formatSheetResults(auth) {
+function formatSheetResults(auth, spreadsheetId, range) {
   return new Promise( (resolve, reject) => {
     const sheets = google.sheets({version: 'v4', auth});
-    sheets.spreadsheets.values.get({
-      spreadsheetId: process.env.RPT_ROSTER_SHEET_ID,
-      range: 'Attendance Data!A:E',
-    }, (err, {data}) => {
+    sheets.spreadsheets.values.get({ spreadsheetId, range}, (err, {data}) => {
       if (err) reject('The API returned an error: ' + err);
       const rows = data.values;
       if (rows.length) {
@@ -83,17 +80,15 @@ function formatSheetResults(auth) {
   })
 }
 
-function writeSheetResults(auth, body) {
+function writeSheetResults(auth, body, spreadsheetId, range) {
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.append({
-    spreadsheetId: process.env.RPT_ATTENDANCE_OUTPUT,
-    range: 'Raw Data!A:AA',
+    spreadsheetId,
+    range,
     valueInputOption: 'RAW',
     resource: {values: body}
-  })
+  });
 }
-
-
 
 module.exports = {
   googleSheetsCredentials: googleSheetsCredentials,
