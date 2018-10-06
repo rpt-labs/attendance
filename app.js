@@ -10,5 +10,4 @@ app.get('/absences', async function(req, res) {
   res.send(absences);
 });
 
-
 app.listen(port, () => console.log(`listening on port ${port}`));

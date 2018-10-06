@@ -1,0 +1,13 @@
+.ui.container {
+  margin-top: 100px;
+}
+
+.cohort-title {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 50px;
+}
+
+.extra > .danger {
+  color: red;
+}
