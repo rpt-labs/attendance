@@ -1,5 +1,7 @@
 import React from 'react';
 import CohortCards from './CohortCards';
+import StudentDetail from './StudentDetail';
+import { Switch, Route } from 'react-router-dom';
 
 class App extends React.Component {
   constructor() {
@@ -27,13 +29,22 @@ class App extends React.Component {
           {id: 18,name: "Cheese Cake", github: "toCakeOrToTart", absencePoints: 12, health: 86},
         ]}
     };
+    this.selectStudent = this.selectStudent.bind(this);
+  }
+
+  selectStudent(studentId) {
+    let selectedStudent = this.state.cohort.students.filter(x => x.id === studentId)[0];
+    this.setState({selectedStudent});
   }
 
   render() {
     return (
     <div className="ui container">
-      <div className="ui header cohort-title">{this.state.cohort.name}</div>
-      <CohortCards students={this.state.cohort.students} name={this.state.cohort.name}/>
+      <Switch>
+        <Route exact path='/' render={()=> <CohortCards handleSelect={this.selectStudent} students={this.state.cohort.students}/>}/>
+        <Route path="/cohorts/:cohortId" render={()=> <CohortCards students={this.state.cohort.students}/>}/>
+        <Route path="/students/:studentId" render={()=> <StudentDetail student={this.state.selectedStudent}/>}/>
+      </Switch>
     </div>
     )
   }
