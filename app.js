@@ -2,7 +2,7 @@ require('dotenv').config();
 var express = require('express');
 var port = process.env.SERVER_PORT;
 const { getAbsenceData } = require('./utils/analyzeAbsences');
-const { students, absenceRecords } = require('./db/fakeStudentData');
+const { absenceRecords } = require('./db/fakeStudentData');
 const bodyParser = require('body-parser');
 
 var app = express();
@@ -18,6 +18,7 @@ app.get('/absences', async function(req, res) {
 
 app.get('/absences/student/:id', function(req, res) {
   let { id } = req.params;
+
   let matchingRecords = absenceRecords.filter((record) => record.studentId === parseInt(id));
   res.send(matchingRecords);
 });
