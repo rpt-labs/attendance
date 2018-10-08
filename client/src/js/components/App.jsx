@@ -33,7 +33,7 @@ class App extends React.Component {
   }
 
   selectStudent(studentId) {
-    let selectedStudent = this.state.cohort.students.filter(x => x.id === studentId)[0];
+    let selectedStudent = this.state.cohort.students.filter((x) => x.id === studentId)[0];
     this.setState({selectedStudent});
   }
 

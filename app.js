@@ -10,14 +10,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+//can use real data from the absence tab, or the fake student data above for developement
 app.get('/absences', async function(req, res) {
-  // let absences = await getAbsenceData();
+  //let absences = await getAbsenceData();
   res.send(absenceRecords);
 });
 
 app.get('/absences/student/:id', function(req, res) {
   let { id } = req.params;
-  let matchingRecords = absenceRecords.filter(record => record.studentId === parseInt(id));
+  let matchingRecords = absenceRecords.filter((record) => record.studentId === parseInt(id));
   res.send(matchingRecords);
 });
 

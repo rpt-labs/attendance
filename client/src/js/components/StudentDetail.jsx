@@ -14,10 +14,9 @@ class StudentDetail extends React.Component {
 
   getStudentAbsences() {
     let studentId = this.props.student.id;
-    console.log("studentId in getStudentAbsences", studentId)
     Api.get(`/absences/student/${studentId}`)
-      .then(absences => {
-        this.setState({ absences }, () => console.log(this.state));
+      .then((absences) => {
+        this.setState({ absences });
       });
   }
 
