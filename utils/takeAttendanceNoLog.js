@@ -36,7 +36,26 @@ async function getAttendanceNoLog (zoomResults, cohorts) {
   // modify output by cohort to print results by cohort
   let attendanceObj = formatStudentsByCohort(studentsOutput);
   //console.log(attendanceObj);
-  return formatAttendanceObj(attendanceObj);
+  let formattedObj = formatAttendanceObj(attendanceObj);
+  return sortByCohort(formattedObj);
+}
+
+function sortByCohort(formattedAttendance) {
+  let results = {}
+  for (let student of formattedAttendance.absent) {
+    if (!results[student.cohort]) {
+      results[student.cohort] = { present:[], absent:[] };
+    }
+      results[student.cohort]['absent'].push(student);
+  };
+
+  for (let student of formattedAttendance.present) {
+    if (!results[student.cohort]) {
+      results[student.cohort] = { present: [], absent: [] };
+    }
+      results[student.cohort]['present'].push(student);
+  };
+  return results;
 }
 
 function formatAttendanceObj(attendanceObj) {
