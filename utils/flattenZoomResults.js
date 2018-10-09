@@ -1,4 +1,5 @@
 function flattenZoomResults(zoomResults){
+  //if no one is in any zoom rooms, return empty []
   if (!zoomResults.length) {
     console.log('Zoom rooms are currently empty');
     return zoomResults;
