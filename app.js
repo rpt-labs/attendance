@@ -16,9 +16,26 @@ app.get('/absences', asyncMiddleware(async(req, res) => {
 app.get('/takeAttendance/:cohorts', asyncMiddleware(async(req, res) => {
   let { cohorts } = req.params;
   cohorts = cohorts.split('+');
+  let results = {};
   let rawAttendance = await zutils.getLiveAttendanceNoLog();
   let formattedAttendance = await getAttendanceNoLog(rawAttendance, cohorts);
-  res.send({formattedAttendance});
+  //let sortedStudents = formattedAttendance.present.sort((a, b) => a.timeJoined > b.timeJoined);
+  for (let student of formattedAttendance.absent) {
+    console.log(student)
+    if (!results[student.cohort]) {
+      results[student.cohort] = [];
+    }
+      results[student.cohort].push(student);
+  };
+
+  for (let student of formattedAttendance.present) {
+
+    if (!results[student.cohort]) {
+      results[student.cohort] = [];
+    }
+      results[student.cohort].push(student);
+  };
+  res.send({results});
 }));
 
 app.listen(port, () => console.log(`listening on port ${port}`));
