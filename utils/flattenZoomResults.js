@@ -1,6 +1,6 @@
 function flattenZoomResults(zoomResults){
   if (!zoomResults.length) {
-    console.log("Zoom rooms are currently empty");
+    console.log('Zoom rooms are currently empty');
     return zoomResults;
   }
   if (zoomResults[0].room) {
