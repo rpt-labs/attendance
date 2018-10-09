@@ -1,5 +1,6 @@
 function flattenZoomResults(zoomResults){
   if (!zoomResults.length) {
+    console.log("Zoom rooms are currently empty");
     return zoomResults;
   }
   if (zoomResults[0].room) {
@@ -7,16 +8,10 @@ function flattenZoomResults(zoomResults){
     return zoomResults
   }
 
-  let studentsPresent = []
-  // console.log(zoomResults)
-
-  if (zoomResults.length < 1 || zoomResults === undefined) {
-    console.log("There are no students in any Zoom Room");
-    return false;
-  }
+  let studentsPresent = [];
 
   for (var i = 0; i < zoomResults.length; i++) {
-    let session = zoomResults[i].liveAttendance.map(student => {
+    let session = zoomResults[i].liveAttendance.map((student) => {
       let name = student['user_name'].split(' ');
       student.firstName = name[0];
       student.lastName = name[1];
@@ -26,9 +21,9 @@ function flattenZoomResults(zoomResults){
        student.moreName = name.slice(2);
       }
       student.room = zoomResults[i].topic;
-      return student
-    })
-    studentsPresent = studentsPresent.concat(session)
+      return student;
+    });
+    studentsPresent = studentsPresent.concat(session);
   }
 
   return studentsPresent
