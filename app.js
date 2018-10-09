@@ -20,20 +20,7 @@ app.get('/takeAttendance/:cohorts', asyncMiddleware(async(req, res) => {
   let rawAttendance = await zutils.getLiveAttendanceNoLog();
   let formattedAttendance = await getAttendanceNoLog(rawAttendance, cohorts);
   //let sortedStudents = formattedAttendance.present.sort((a, b) => a.timeJoined > b.timeJoined);
-  for (let student of formattedAttendance.absent) {
-    if (!results[student.cohort]) {
-      results[student.cohort] = [];
-    }
-      results[student.cohort].push(student);
-  };
-
-  for (let student of formattedAttendance.present) {
-    if (!results[student.cohort]) {
-      results[student.cohort] = [];
-    }
-      results[student.cohort].push(student);
-  };
-  res.send({results});
+  res.send({ results: formattedAttendance });
 }));
 
 app.listen(port, () => console.log(`listening on port ${port}`));
