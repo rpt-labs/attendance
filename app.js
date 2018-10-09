@@ -21,7 +21,6 @@ app.get('/takeAttendance/:cohorts', asyncMiddleware(async(req, res) => {
   let formattedAttendance = await getAttendanceNoLog(rawAttendance, cohorts);
   //let sortedStudents = formattedAttendance.present.sort((a, b) => a.timeJoined > b.timeJoined);
   for (let student of formattedAttendance.absent) {
-    console.log(student)
     if (!results[student.cohort]) {
       results[student.cohort] = [];
     }
@@ -29,7 +28,6 @@ app.get('/takeAttendance/:cohorts', asyncMiddleware(async(req, res) => {
   };
 
   for (let student of formattedAttendance.present) {
-
     if (!results[student.cohort]) {
       results[student.cohort] = [];
     }
