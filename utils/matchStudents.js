@@ -12,7 +12,7 @@ function matchStudents(studentsExpected, studentsPresent) {
 		let studentOtherName = student.other_zoom_name;
 		let studentFirstInitialLastName = studentFullName[0] + studentNameCollection[1];
 		let studentConcatName = studentNameCollection.join('')
-		let studentEmail = student.email.split('@')[0];
+    let studentEmail = student.email.split('@')[0];
 		let studentEmailCollection = null;
 		if (studentEmail.indexOf('.') > -1) {
 			studentEmailCollection = studentEmail.split('.');
@@ -50,7 +50,8 @@ function matchStudents(studentsExpected, studentsPresent) {
       if (studentZoom.lastName) {
         studentZoom.lastName = studentZoom.lastName.toLowerCase();
       }
-			let studentZoomName = studentZoom.user_name.toLowerCase().replace('.','');
+      let studentZoomName = studentZoom.user_name.toLowerCase().replace('.','');
+      let timeJoined = studentZoom.join_time;
 
 
 			// first try direct match
@@ -59,6 +60,7 @@ function matchStudents(studentsExpected, studentsPresent) {
           studentOutput.matchReliability = 100;
           studentOutput.match = `full name: ${studentFullName}`;
           studentOutput.room = studentZoom.room;
+          studentOutput.timeJoined = timeJoined;
 
 			// try ther zoom username if different
 			} else if (studentOtherName.indexOf(studentZoomName) > -1 ) {
@@ -66,6 +68,7 @@ function matchStudents(studentsExpected, studentsPresent) {
           studentOutput.matchReliability = 100;
 					studentOutput.match = `other name: ${studentOtherName}`;
           studentOutput.room = studentZoom.room;
+          studentOutput.timeJoined = timeJoined;
 
 			// try email before @
 			} else if (!studentEmail && studentEmail.indexOf(studentZoomName) > -1 ) {
@@ -73,6 +76,7 @@ function matchStudents(studentsExpected, studentsPresent) {
           studentOutput.matchReliability = 100;
 					studentOutput.match = `email: ${studentEmail}`;
           studentOutput.room = studentZoom.room;
+          studentOutput.timeJoined = timeJoined;
 
       // try full name concatenated and without spaces
 			} else if (studentConcatName.indexOf(studentZoomName) > -1 ) {
@@ -80,6 +84,7 @@ function matchStudents(studentsExpected, studentsPresent) {
           studentOutput.matchReliability = 100;
 					studentOutput.match = `concatName: ${studentConcatName}`;
           studentOutput.room = studentZoom.room;
+          studentOutput.timeJoined = timeJoined;
 
         // try to match zoom name within full name (this can be problematic)
       } else if (studentFullName.indexOf(studentZoomName) > -1 ) {
@@ -87,6 +92,7 @@ function matchStudents(studentsExpected, studentsPresent) {
           studentOutput.matchReliability = 50;
           studentOutput.match = `within full name: ${studentFullName} with ${studentZoomName}`;
           studentOutput.room = studentZoom.room;
+          studentOutput.timeJoined = timeJoined;
 
       }
 

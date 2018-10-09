@@ -107,23 +107,28 @@ function getCurrentRoomStats(roomUUId) {
 //global counter to help iterate across all live rooms collected
 let counter  = 0;
 //function blocking loop to get room stats once live room uuids have been collected
-function resultsLoop(cb){
-   setTimeout(async function () {
-     if (results.length === 0 || results[counter] === undefined || results[counter].uuid === undefined) {
-       cb([])
-       return
-     }
-      let attendance = await getCurrentRoomStats(results[counter].uuid)
-      attendance = JSON.parse(attendance)
-      results[counter]['liveAttendance'] = attendance.participants
-      counter++;
-      if (counter < results.length) {
-         resultsLoop(cb);
-      } else {
-        cb(results)
-        return
-      }
-   }, 1000)
+async function resultsLoop(cb){
+  if (results.length === 0 || results[counter] === undefined || results[counter].uuid === undefined) {
+    if (cb) {
+      cb([])
+    } else {
+      return [];
+    }
+  }
+  let attendance = await getCurrentRoomStats(results[counter].uuid)
+  attendance = JSON.parse(attendance)
+  results[counter]['liveAttendance'] = attendance.participants
+  counter++;
+  if (counter < results.length) {
+    resultsLoop(cb);
+  } else {
+    if (cb) {
+      cb(results);
+      return;
+    } else {
+      return results;
+    }
+  }
 }
 //get attendance from all rooms
 async function globalAttendance(acctId, uselessNum) {
@@ -136,6 +141,18 @@ async function globalAttendance(acctId, uselessNum) {
     mtg['host_name'] = acctId[1]
   })
   results = results.concat(allMtgs.meetings)
+}
+function getLiveAttendanceNoLog() {
+  return new Promise(function(resolve, reject) {
+    delay(1000, ()=>{globalAttendance(acctIdArr[0],1)})
+    delay(2100, ()=>{globalAttendance(acctIdArr[1],2)})
+    delay(3200, ()=>{globalAttendance(acctIdArr[2],3)})
+    delay(4300, ()=>{globalAttendance(acctIdArr[3],4)})
+    delay(5400, ()=>{globalAttendance(acctIdArr[4],5)})
+    delay(6500, ()=>{globalAttendance(acctIdArr[5],6)})
+    delay(7600, ()=>{globalAttendance(acctIdArr[6],7)})
+    delay(8000, ()=>{resolve(resultsLoop())});
+  });
 }
 //zoom api call to fetch live attendance
 function getLiveAttendance(cb) {
@@ -183,7 +200,7 @@ function getAcctMeetingHistory(startDate, endDate, acctId) {
   //end fcn
 }
 
-
 module.exports = {
-  getLiveAttendance: getLiveAttendance
+  getLiveAttendance: getLiveAttendance,
+  getLiveAttendanceNoLog
 }
