@@ -6,6 +6,7 @@ let filterToStudentsExpected = require('./filterToStudentsExpected')
 let sheetsAuth = require('../sheetsAuth');
 
 async function getAttendanceNoLog (zoomResults, cohorts) {
+  console.log("IN GET ATT NO LOG zoomResults", zoomResults)
   // fetch credentials to authorize
   let credentials = await sheetsAuth.googleSheetsCredentials();
   // authorize using credentials

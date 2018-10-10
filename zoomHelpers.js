@@ -40,6 +40,10 @@ function delay(ms, cb){
   setTimeout(cb,ms)
 }
 
+function promiseDelay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 //zoom api call to get live meetings held by acctId
 function getAllLiveMeetings(acctId) {
   let zoomOptions = {
@@ -118,6 +122,7 @@ async function resultsLoop(cb){
   let attendance = await getCurrentRoomStats(results[counter].uuid)
   attendance = JSON.parse(attendance)
   results[counter]['liveAttendance'] = attendance.participants
+  console.log("ATTENDANCE.participants",attendance.participants, "RESULTS",results);
   counter++;
   if (counter < results.length) {
     resultsLoop(cb);
@@ -140,19 +145,24 @@ async function globalAttendance(acctId, uselessNum) {
   allMtgs.meetings.forEach(mtg => {
     mtg['host_name'] = acctId[1]
   })
-  results = results.concat(allMtgs.meetings)
+  results = results.concat(allMtgs.meetings);
+  return `complete ${acctId}`;
 }
-function getLiveAttendanceNoLog() {
-  return new Promise(function(resolve, reject) {
-    delay(1000, ()=>{globalAttendance(acctIdArr[0],1)})
-    delay(2100, ()=>{globalAttendance(acctIdArr[1],2)})
-    delay(3200, ()=>{globalAttendance(acctIdArr[2],3)})
-    delay(4300, ()=>{globalAttendance(acctIdArr[3],4)})
-    delay(5400, ()=>{globalAttendance(acctIdArr[4],5)})
-    delay(6500, ()=>{globalAttendance(acctIdArr[5],6)})
-    delay(7600, ()=>{globalAttendance(acctIdArr[6],7)})
-    delay(8000, ()=>{resolve(resultsLoop())});
-  });
+async function getLiveAttendanceNoLog() {
+  let accountNumber = 0;
+  let done = false;
+  while (!done) {
+    let account = await globalAttendance(acctIdArr[accountNumber],accountNumber + 1);
+    let delay = await promiseDelay(1000);
+    accountNumber++;
+    if (accountNumber === acctIdArr.length - 1) {
+      done = true;
+    }
+  }
+
+  let findStudents = await resultsLoop();
+  console.log("ROOMS", results, "FIND STUDENTS", findStudents);
+  return findStudents;
 }
 //zoom api call to fetch live attendance
 function getLiveAttendance(cb) {

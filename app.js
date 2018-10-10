@@ -19,7 +19,7 @@ app.get('/takeAttendance/:cohorts', cors(), asyncMiddleware(async(req, res) => {
   cohorts = cohorts.split('+');
   let rawAttendance = await zutils.getLiveAttendanceNoLog();
   let formattedAttendance = await getAttendanceNoLog(rawAttendance, cohorts);
-  //let sortedStudents = formattedAttendance.present.sort((a, b) => a.timeJoined > b.timeJoined);
+  //TODO: present students by timestamp
   res.send({ results: formattedAttendance });
 }));
 

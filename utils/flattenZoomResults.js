@@ -1,9 +1,9 @@
 function flattenZoomResults(zoomResults){
-  //if no one is in any zoom rooms, return empty []
-  if (!zoomResults.length) {
-    console.log('Zoom rooms are currently empty');
-    return zoomResults;
+  if (zoomResults.length === 0) {
+    console.log('No one was in zoom');
+    return [];
   }
+
   if (zoomResults[0].room) {
     console.log('🧚‍ running sample data');
     return zoomResults
