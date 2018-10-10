@@ -6,7 +6,6 @@ let filterToStudentsExpected = require('./filterToStudentsExpected')
 let sheetsAuth = require('../sheetsAuth');
 
 async function getAttendanceNoLog (zoomResults, cohorts) {
-  console.log("IN GET ATT NO LOG zoomResults", zoomResults)
   // fetch credentials to authorize
   let credentials = await sheetsAuth.googleSheetsCredentials();
   // authorize using credentials
@@ -36,7 +35,6 @@ async function getAttendanceNoLog (zoomResults, cohorts) {
   let studentsOutput = matchStudents(studentsExpected, studentsPresent);
   // modify output by cohort to print results by cohort
   let attendanceObj = formatStudentsByCohort(studentsOutput);
-  //console.log(attendanceObj);
   let formattedObj = formatAttendanceObj(attendanceObj);
   return sortByCohort(formattedObj);
 }

@@ -119,10 +119,9 @@ async function resultsLoop(cb){
       return [];
     }
   }
-  let attendance = await getCurrentRoomStats(results[counter].uuid)
-  attendance = JSON.parse(attendance)
-  results[counter]['liveAttendance'] = attendance.participants
-  console.log("ATTENDANCE.participants",attendance.participants, "RESULTS",results);
+  let attendance = await getCurrentRoomStats(results[counter].uuid);
+  attendance = JSON.parse(attendance);
+  results[counter]['liveAttendance'] = attendance.participants;
   counter++;
   if (counter < results.length) {
     resultsLoop(cb);
@@ -150,18 +149,13 @@ async function globalAttendance(acctId, uselessNum) {
 }
 async function getLiveAttendanceNoLog() {
   let accountNumber = 0;
-  let done = false;
-  while (!done) {
+  while (accountNumber < acctIdArr.length) {
     let account = await globalAttendance(acctIdArr[accountNumber],accountNumber + 1);
     let delay = await promiseDelay(1000);
     accountNumber++;
-    if (accountNumber === acctIdArr.length - 1) {
-      done = true;
-    }
   }
 
   let findStudents = await resultsLoop();
-  console.log("ROOMS", results, "FIND STUDENTS", findStudents);
   return findStudents;
 }
 //zoom api call to fetch live attendance
