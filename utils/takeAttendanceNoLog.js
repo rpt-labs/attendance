@@ -35,7 +35,6 @@ async function getAttendanceNoLog (zoomResults, cohorts) {
   let studentsOutput = matchStudents(studentsExpected, studentsPresent);
   // modify output by cohort to print results by cohort
   let attendanceObj = formatStudentsByCohort(studentsOutput);
-  //console.log(attendanceObj);
   let formattedObj = formatAttendanceObj(attendanceObj);
   return sortByCohort(formattedObj);
 }
