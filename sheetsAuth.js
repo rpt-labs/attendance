@@ -1,16 +1,17 @@
 require('dotenv').config();
 const fs = require('fs');
+const path = require('path');
 const readline = require('readline');
 const {google} = require('googleapis');
 
 // If modifying these scopes, delete credentials.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
-const TOKEN_PATH = 'credentials.json';
+const TOKEN_PATH = path.join(__dirname, 'credentials.json');
 
 function googleSheetsCredentials() {
     // Load client secrets from a local file.
     return new Promise( (resolve, reject) => {
-    fs.readFile('google_secret.json', (err, content) => {
+    fs.readFile(path.join(__dirname, 'google_secret.json'), (err, content) => {
       if (err) reject('Error loading client secret file:', err);
       // Authorize a client with credentials, then call the Google Sheets API.
       resolve(JSON.parse(content));
