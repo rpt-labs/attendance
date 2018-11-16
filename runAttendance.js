@@ -23,7 +23,7 @@ async function runAttendance(zoomResults){
   // authorize using credentials
   let authorize = await sheetsAuth.authorize(credentials);
   // with authorization, fetch sheets data
-  let studentsUnformatted = await sheetsAuth.formatSheetResults(authorize, process.env.RPT_ROSTER_SHEET_ID, 'Attendance Data!A:E');
+  let studentsUnformatted = await sheetsAuth.formatSheetResults(authorize, process.env.RPT_ATTENDANCE_OUTPUT, 'Attendance Roster!A:E');
   // format returned data for attendance
   let studentsFormatted = studentsUnformatted.map(el => {
     return   {
