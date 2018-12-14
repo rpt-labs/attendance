@@ -1,4 +1,6 @@
-const sheetsAuth = require('../sheetsAuth');
+const { readGoogleSheets } = require('./sheetsUtil');
+const { RPT_ATTENDANCE_OUTPUT } = process.env;
+
 //grab absense data
 const getAbsenceData = async() => {
   // fetch credentials to authorize
@@ -6,7 +8,7 @@ const getAbsenceData = async() => {
   // authorize using credentials
   let authorize = await sheetsAuth.authorize(credentials);
   // with authorization, fetch absence data
-  let absenceData = await sheetsAuth.formatSheetResults(authorize, process.env.RPT_ATTENDANCE_OUTPUT, 'Absences!A:C');
+  let absenceData = await readGoogleSheets(RPT_ATTENDANCE_OUTPUT, 'Absences!A:C');
   return absenceData.slice(1);
 }
 

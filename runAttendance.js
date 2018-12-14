@@ -1,7 +1,5 @@
-var fs = require('fs');
-var Papa = require('papaparse');
+
 let zutils = require('./zoomHelpers');
-let storeZoomRecords = require('./utils/storeZoomRecords')
 let flattenZoomResults = require('./utils/flattenZoomResults')
 let printAttendance = require('./utils/printAttendance')
 let matchStudents = require('./utils/matchStudents')
@@ -9,21 +7,17 @@ let { writeAttendanceToGoogleSheets } = require('./utils/writeToGoogleSheets')
 let { writeAbsencesToGoogleSheets } = require('./utils/writeToGoogleSheets')
 let formatStudentsByCohort = require('./utils/formatStudentsByCohort')
 let filterToStudentsExpected = require('./utils/filterToStudentsExpected')
-let sheetsAuth = require('./sheetsAuth');
 //let sampleData = require('./utils/sampleData.js');
 let DEBUG = false;
 var optionalParams = process.argv.slice(2)
 var recordToGoogle = optionalParams[0] === 'LOG'
 
-
+const { RPT_ATTENDANCE_OUTPUT } = process.env;
+const { readGoogleSheets } = require('./utils/sheetsUtil');
 
 async function runAttendance(zoomResults){
-  // fetch credentials to authorize
-  let credentials = await sheetsAuth.googleSheetsCredentials();
-  // authorize using credentials
-  let authorize = await sheetsAuth.authorize(credentials);
-  // with authorization, fetch sheets data
-  let studentsUnformatted = await sheetsAuth.formatSheetResults(authorize, process.env.RPT_ATTENDANCE_OUTPUT, 'Attendance Roster!A:E');
+  let studentsUnformatted = await readGoogleSheets(RPT_ATTENDANCE_OUTPUT, 'Attendance Roster!A:E');
+
   // format returned data for attendance
   let studentsFormatted = studentsUnformatted.map(el => {
     return   {
@@ -57,7 +51,7 @@ async function runAttendance(zoomResults){
   if (recordToGoogle) writeAbsencesToGoogleSheets(attendanceObj);
   printAttendance(attendanceObj);
 	return
-}
+};
 
 if (DEBUG) {
   runAttendance(sampleData)

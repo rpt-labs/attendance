@@ -1,17 +1,15 @@
-let flattenZoomResults = require('./flattenZoomResults');
-let matchStudents = require('./matchStudents');
-let { findAbsentAndPresentStudents } = require('./writeToGoogleSheets');
-let formatStudentsByCohort = require('./formatStudentsByCohort')
-let filterToStudentsExpected = require('./filterToStudentsExpected')
-let sheetsAuth = require('../sheetsAuth');
+const flattenZoomResults = require('./flattenZoomResults');
+const matchStudents = require('./matchStudents');
+const { findAbsentAndPresentStudents } = require('./writeToGoogleSheets');
+const formatStudentsByCohort = require('./formatStudentsByCohort')
+const filterToStudentsExpected = require('./filterToStudentsExpected')
+const { RPT_ATTENDANCE_OUTPUT } = process.env
+const { readGoogleSheets } = './sheetsUtil';
 
 async function getAttendanceNoLog (zoomResults, cohorts) {
-  // fetch credentials to authorize
-  let credentials = await sheetsAuth.googleSheetsCredentials();
-  // authorize using credentials
-  let authorize = await sheetsAuth.authorize(credentials);
-  // with authorization, fetch sheets data
-  let studentsUnformatted = await sheetsAuth.formatSheetResults(authorize, process.env.RPT_ROSTER_SHEET_ID, 'Attendance Data!A:E');
+
+  let studentsUnformatted = await readGoogleSheets(RPT_ATTENDANCE_OUTPUT, 'Attendance Roster!A:E');
+
   // format returned data for attendance
   let studentsFormatted = studentsUnformatted.map(el => {
     return   {
