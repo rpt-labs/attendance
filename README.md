@@ -1,8 +1,8 @@
 ### Before getting started:
 1. `npm install`
-2. ensure you have `credentials.json`, `google_secret.json`, `.env` in project root
+2. Get the SHEETS_UTIL_URL and SHEETS_UTIL_API_KEY from lead tech mentor and place in .env folder at the root of the app.
 3. either remove require for `sampleData` in `runAttendance.js` or ensure you have one in `utils/sampleData.js` (only used when `DEBUG = true` in `runAttendance.js`)
-4. run script for the first time (see below) and copy the authorization link to a browser to authenticate
+4. run script for the first time (see below)
 
 
 ### To run script, from project root...
@@ -19,6 +19,7 @@
 `node runAttendance.js LOG RPT05 RPT06` _// logs all zoom data fetched to google sheets and returns attendance for cohorts RPT05 and RPT06_
 
 NOTE: you must be running node 8.11 and above for this script to work
+NOTE: currently, the LOG command is being executed automatically.  You can run the script with no log command any time without interfering with the automated attendance taking.
 
 
 ### Known Problems/Inefficiencies:
@@ -28,8 +29,9 @@ NOTE: you must be running node 8.11 and above for this script to work
 ### How it works:
 
 This script basically does the following:
-1. Fetch cohort data from `https://docs.google.com/spreadsheets/d/1zoCbN_cev7pUy-yHlIw7xpnkgsqYOTR7_8GNL6Uryok/edit#gid=1037917149` where sheet `Attendance Data` pulls in enrolled, active students along with their zoom name if its particularly unique
+1. Fetch cohort data from the RPT Attendnace Data spreadsheet, which pulls in enrolled, active students along with their zoom name
 2. Fetch live zoom participant data from the RPT zoom accounts hosting the zoom sessions
-3. Flattens zoom data and writes raw data fetched from zoom to `https://docs.google.com/spreadsheets/d/13QoBe1gt_bEBPp_7snEBY96xguLtjmtuVhETAUgV-O8/edit#gid=0`
+3. Flattens zoom data and writes raw data fetched from zoom to RPT Attendance Data spreadsheet (if in LOG mode)
 4. Matches the students present against the students we expect based on a basic matching logic
 5. Prints to the console who is here with emphasis to who is ABSENT. Precarious matches are `yellow`
+6.  Writes the absent student data to RPT Attendance Data spreadsheet (if in LOG mode)

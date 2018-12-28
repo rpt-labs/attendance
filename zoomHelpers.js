@@ -2,7 +2,7 @@
 require('dotenv').config()
 let request = require ('request');
 let jwt = require('jsonwebtoken');
-let qs = require('querystring');
+
 //set keys, accts
 let key = process.env.ZOOM_API_KEY;
 let secret = process.env.ZOOM_API_SECRET;

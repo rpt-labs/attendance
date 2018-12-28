@@ -1,12 +1,11 @@
 var Papa = require('papaparse');
 var fs = require('fs');
 
-
 function storeZoomRecords(zoomInput){
 
   fs.readFile('data/zoom_records.csv', 'utf8', (err, data) => {
     let tmp = Papa.parse(data)
-    
+
     let existingCSV = tmp.data.map(stu => {
       return {
         user_id: stu[0],
@@ -49,7 +48,5 @@ function storeZoomRecords(zoomInput){
   })
 
 }
-
-
 
 module.exports = storeZoomRecords;
