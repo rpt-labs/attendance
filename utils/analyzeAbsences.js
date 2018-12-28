@@ -1,13 +1,12 @@
 const { readGoogleSheets } = require('./sheetsUtil');
 const { RPT_ATTENDANCE_OUTPUT } = process.env;
 
+/*TODO:  Logic for analyzing absence data
+  TODO:  Update when absence data is stored in db
+*/
+
 //grab absense data
 const getAbsenceData = async() => {
-  // fetch credentials to authorize
-  let credentials = await sheetsAuth.googleSheetsCredentials();
-  // authorize using credentials
-  let authorize = await sheetsAuth.authorize(credentials);
-  // with authorization, fetch absence data
   let absenceData = await readGoogleSheets(RPT_ATTENDANCE_OUTPUT, 'Absences!A:C');
   return absenceData.slice(1);
 }
@@ -58,13 +57,5 @@ const sortAbsenceData = (absenceData, sortType) => {
 //filter by student
 
 //filter by date
-
-
-// let test = async function() {
-//   let hello = await getAbsenceData();
-//   countAbsences(hello);
-// }
-
-// test();
 
 module.exports = { getAbsenceData, countAbsences };
