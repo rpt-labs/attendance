@@ -10,7 +10,7 @@ module.exports = {
       return err.detail;
     }
   },
-  getStudentById: async (studentId) => {
+  getStudentById: async studentId => {
     try {
       const student = await query(`SELECT * FROM students WHERE id=${studentId}`);
       return student.rows[0];
@@ -19,7 +19,7 @@ module.exports = {
       return err;
     }
   },
-  getStudentsByCohort: async (cohortId) => {
+  getStudentsByCohort: async cohortId => {
     try {
       const studentQuery = await query(`
         SELECT * FROM students WHERE cohort_id=${cohortId}
@@ -30,5 +30,5 @@ module.exports = {
       console.log(err);
       return err;
     }
-  },
+  }
 };

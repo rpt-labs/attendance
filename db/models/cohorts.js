@@ -11,7 +11,7 @@ module.exports = {
       return err;
     }
   },
-  getCohortById: async (cohortId) => {
+  getCohortById: async cohortId => {
     try {
       const cohort = await query(`SELECT * FROM cohorts WHERE id=${cohortId}`);
       return cohort.rows[0];
@@ -19,5 +19,5 @@ module.exports = {
       console.log(err);
       return err;
     }
-  },
+  }
 };
