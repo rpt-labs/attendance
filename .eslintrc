@@ -1,0 +1,20 @@
+{
+  "parser": "babel-eslint",
+  "plugins": ["react", "import", "jsx-a11y", "prettier"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "react/prop-types": [2],
+    "max-len": 0,
+    "jsx-a11y/label-has-for": [ "error", {
+      "required": {
+        "some": [ "nesting", "id"  ]
+      }
+    }],
+    "prettier/prettier": ["error"]
+  },
+  "extends": ["airbnb", "prettier"]
+}

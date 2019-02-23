@@ -11,7 +11,8 @@
   },
   "scripts": {
     "start": "node zoomUtils.js",
-    "dev": "webpack -d --watch"
+    "dev": "webpack -d --watch",
+    "lint": "eslint *.js client db server utils --fix"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "^7.1.5",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
@@ -40,9 +42,18 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^1.0.0",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.3",
+    "prettier": "^1.16.4",
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.0"
   }
