@@ -18,26 +18,6 @@ function googleSheetsCredentials() {
     });
   });
 }
-
-async function authorize(credentials) {
-  const { client_secret, client_id, redirect_uris } = credentials.installed;
-  const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
-  // Check if we have previously stored a token.
-  return new Promise((resolve, reject) => {
-    fs.readFile(TOKEN_PATH, async (err, token) => {
-      if (err) {
-        console.log('🐸');
-        console.log(err);
-        const newToken = await getNewToken(oAuth2Client);
-        resolve(newToken);
-      } else {
-        oAuth2Client.setCredentials(JSON.parse(token));
-        resolve(oAuth2Client);
-      }
-    });
-  });
-}
-
 function getNewToken(oAuth2Client) {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
@@ -61,6 +41,25 @@ function getNewToken(oAuth2Client) {
         });
         resolve(oAuth2Client);
       });
+    });
+  });
+}
+
+async function authorize(credentials) {
+  const { client_secret, client_id, redirect_uris } = credentials.installed;
+  const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
+  // Check if we have previously stored a token.
+  return new Promise((resolve, reject) => {
+    fs.readFile(TOKEN_PATH, async (err, token) => {
+      if (err) {
+        console.log('🐸');
+        console.log(err);
+        const newToken = await getNewToken(oAuth2Client);
+        resolve(newToken);
+      } else {
+        oAuth2Client.setCredentials(JSON.parse(token));
+        resolve(oAuth2Client);
+      }
     });
   });
 }

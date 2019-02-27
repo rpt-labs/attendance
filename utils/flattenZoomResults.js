@@ -11,7 +11,7 @@ function flattenZoomResults(zoomResults) {
 
   let studentsPresent = [];
 
-  for (var i = 0; i < zoomResults.length; i++) {
+  for (let i = 0; i < zoomResults.length; i += 1) {
     const session = zoomResults[i].liveAttendance.map(student => {
       const name = student.user_name.split(' ');
       student.firstName = name[0];

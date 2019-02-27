@@ -18,10 +18,12 @@ exports.getCohorts = async (req, res) => {
 exports.getStudents = async (req, res) => {
   const { cohortId } = req.query;
   const studentData = cohortId
-    ? await students.getStudentsByCohort(cohort_id).catch(handleError)
+    ? await students.getStudentsByCohort(cohortId).catch(handleError)
     : await students.getAllStudents().catch(handleError);
 
-  studentData.length
-    ? res.status(200).json({ students: studentData })
-    : res.status(400).json({ error: 'error retrieving students.  check that cohort_id is a valid cohort id' });
+  if (studentData.length) {
+    res.status(200).json({ students: studentData });
+  } else {
+    res.status(400).json({ error: 'error retrieving students.  check cohort id is valid' });
+  }
 };

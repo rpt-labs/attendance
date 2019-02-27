@@ -3,8 +3,9 @@ const sheetsAuth = require('../sheetsAuth');
 function findAbsentAndPresentStudents(attendanceObj) {
   const delinquents = [];
   const present = [];
-  for (const cohort in attendanceObj) {
-    for (let i = 0; i < attendanceObj[cohort].length; i++) {
+
+  Object.keys(attendanceObj).forEach(cohort => {
+    for (let i = 0; i < attendanceObj[cohort].length; i += 1) {
       const stuObj = attendanceObj[cohort][i];
       if (attendanceObj[cohort][i].absent) {
         delinquents.push(stuObj);
@@ -12,7 +13,8 @@ function findAbsentAndPresentStudents(attendanceObj) {
         present.push(stuObj);
       }
     }
-  }
+  });
+
   return { absent: delinquents, present };
 }
 async function writeAbsencesToGoogleSheets(attendanceObj) {
@@ -67,9 +69,9 @@ async function writeAttendanceToGoogleSheets(input) {
       timestamp: obj.timestamp || 'null'
     };
 
-    for (const key in zoomObj) {
+    Object.keys(zoomObj).forEach(key => {
       value.push(zoomObj[key]);
-    }
+    });
 
     values.push(value);
   });

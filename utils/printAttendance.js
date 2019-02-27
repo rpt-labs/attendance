@@ -11,7 +11,7 @@ function determineColor(matchReliability) {
     cyan: '\x1b[36m'
   };
 
-  matchColor = {
+  const matchColor = {
     title: color.black,
     '0': color.red,
     '50': color.yellow,

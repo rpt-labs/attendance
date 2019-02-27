@@ -4,7 +4,7 @@ function matchStudents(studentsExpected, studentsPresent) {
   const studentsOutput = [];
   if (DEBUG) console.log('----------------- matchStudents.js -----------------');
   // loop through student roster, which was filtered into cohorts expected
-  for (let i = 0; i < studentsExpected.length; i++) {
+  for (let i = 0; i < studentsExpected.length; i += 1) {
     // create variables
     const student = studentsExpected[i];
     const studentFullName = student.full_name.toLowerCase();
@@ -41,7 +41,7 @@ function matchStudents(studentsExpected, studentsPresent) {
     // loop through studentsPresent, a flat collection originating
     // from zutils.getLiveAttendance(runAttendance).
     // this data is the same shape as utils/sampleData.js
-    for (let j = 0; j < studentsPresent.length; j++) {
+    for (let j = 0; j < studentsPresent.length; j += 1) {
       const studentZoom = studentsPresent[j];
 
       // convert all names to lowercase where applicable

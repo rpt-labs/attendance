@@ -124,7 +124,7 @@ async function resultsLoop(cb) {
   let attendance = await getCurrentRoomStats(results[counter].uuid);
   attendance = JSON.parse(attendance);
   results[counter].liveAttendance = attendance.participants;
-  counter++;
+  counter += 1;
   if (counter < results.length) {
     resultsLoop(cb);
   } else if (cb) {
@@ -152,7 +152,7 @@ async function getLiveAttendanceNoLog() {
   while (!done) {
     const account = await globalAttendance(acctIdArr[accountNumber], accountNumber + 1);
     const delay = await promiseDelay(1200);
-    accountNumber++;
+    accountNumber += 1;
     if (accountNumber === acctIdArr.length) {
       done = true;
     }
