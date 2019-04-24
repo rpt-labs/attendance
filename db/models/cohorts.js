@@ -7,7 +7,7 @@ module.exports = {
       console.log('cohortQuery', cohortQuery);
       return cohortQuery.rows;
     } catch (err) {
-      console.log(err.detal || err);
+      console.log(err.detail || err);
       return err;
     }
   },

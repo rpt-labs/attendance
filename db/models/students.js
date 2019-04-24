@@ -6,7 +6,7 @@ module.exports = {
       const studentQuery = await query('SELECT * FROM students ORDER BY first_name ASC');
       return studentQuery.rows;
     } catch (err) {
-      console.log(err.detal || err);
+      console.log(err.detail || err);
       return err.detail;
     }
   },
