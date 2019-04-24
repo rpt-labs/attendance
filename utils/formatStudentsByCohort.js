@@ -1,15 +1,15 @@
 function formatStudentsByCohort(studentsOutput) {
-  let attendanceObj = {}
+  const attendanceObj = {};
 
-  studentsOutput.forEach(el=>{
-		if (!attendanceObj[el.cohort]) {
-			attendanceObj[el.cohort] = [];
-		}
+  studentsOutput.forEach(el => {
+    if (!attendanceObj[el.cohort]) {
+      attendanceObj[el.cohort] = [];
+    }
 
-		attendanceObj[el.cohort].push(el)
-	})
+    attendanceObj[el.cohort].push(el);
+  });
 
-  return attendanceObj
+  return attendanceObj;
 }
 
-module.exports = formatStudentsByCohort
+module.exports = formatStudentsByCohort;

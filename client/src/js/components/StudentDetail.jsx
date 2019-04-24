@@ -1,2 +1,2 @@
-//shows detailed absence data for students
+// shows detailed absence data for students
 //

@@ -6,12 +6,12 @@ const srcFolder = path.join(__dirname, '/client/src/');
 
 module.exports = {
   entry: {
-    main: [path.join(srcFolder, '/js/index.jsx')],
+    main: [path.join(srcFolder, '/js/index.jsx')]
   },
   resolve: { extensions: ['.js', '.jsx'] },
   output: {
     path: path.resolve(__dirname, 'public'),
-    filename: '[name].js',
+    filename: '[name].js'
   },
   module: {
     rules: [
@@ -19,36 +19,36 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
-        },
+          loader: 'babel-loader'
+        }
       },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        use: ['babel-loader'],
+        use: ['babel-loader']
       },
       {
         test: /\.html$/,
         use: [
           {
             loader: 'html-loader',
-            options: { minimize: true },
-          },
-        ],
+            options: { minimize: true }
+          }
+        ]
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
-      },
-    ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      }
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(srcFolder, '/index.html'),
-      filename: './index.html',
+      filename: './index.html'
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-    }),
-  ],
+      filename: '[name].css'
+    })
+  ]
 };
