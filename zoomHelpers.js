@@ -15,6 +15,10 @@ const acctDogwood = [process.env.DOGWOOD_ACCT_ID, 'acctDogwood'];
 const acctEucalyptus = [process.env.EUCALYPTUS_ACCT_ID, 'acctEucalyptus'];
 const acctFir = [process.env.FIR_ACCT_ID, 'acctFir'];
 const acctAcacia = [process.env.ACACIA_ACCT_ID, 'acctAcacia'];
+const acctStaff1 = [process.env.STAFF_1_ID, 'acctStaff1'];
+const acctStaff2 = [process.env.STAFF_2_ID, 'acctStaff2'];
+const acctStaff3 = [process.env.STAFF_3_ID, 'acctStaff3'];
+const acctStaff4 = [process.env.STAFF_4_ID, 'acctStaff4'];
 
 // set time for token validity
 const convertToSeconds = 1000; // 1000 ms in 1 second
@@ -32,7 +36,19 @@ const token = jwt.sign(payload, secret);
 let results = [];
 
 // accts in collection
-const acctIdArr = [acctBaobob, acctCherryblossom, acctDogwood, acctMain, acctEucalyptus, acctFir, acctAcacia];
+const acctIdArr = [
+  acctBaobob,
+  acctCherryblossom,
+  acctDogwood,
+  acctMain,
+  acctEucalyptus,
+  acctFir,
+  acctAcacia,
+  acctStaff1,
+  acctStaff2,
+  acctStaff3,
+  acctStaff4
+];
 
 // setTimeout helper function
 function delay(ms, cb) {
