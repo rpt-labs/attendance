@@ -3,7 +3,7 @@ const Papa = require('papaparse');
 const zutils = require('./zoomHelpers');
 const storeZoomRecords = require('./utils/storeZoomRecords');
 const flattenZoomResults = require('./utils/flattenZoomResults');
-const printAttendance = require('./utils/printAttendance');
+const { printAttendance, emailAttendance } = require('./utils/printAttendance');
 const matchStudents = require('./utils/matchStudents');
 const { writeAttendanceToGoogleSheets } = require('./utils/writeToGoogleSheets');
 const { writeAbsencesToGoogleSheets } = require('./utils/writeToGoogleSheets');
@@ -57,7 +57,9 @@ async function runAttendance(zoomResults) {
   // send for console log
   // write absence data to googly sheets
   if (recordToGoogle) writeAbsencesToGoogleSheets(attendanceObj);
+  
   printAttendance(attendanceObj);
+  emailAttendance(attendanceObj, ['magee.mooney@galvanize.com']);
 }
 
 if (DEBUG) {
