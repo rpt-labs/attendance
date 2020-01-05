@@ -21,6 +21,16 @@ function determineColor(matchReliability) {
   return matchColor[reliability] ? matchColor[reliability] : color.magenta;
 }
 
+const emailAttendance = (attendanceObject, addressees) => {
+  return createAttendanceReport(attendanceObj);
+};
+
+const writeAttendanceReport = attendanceObj => {
+  const report = createAttendanceReport(attendanceObj);
+  console.log("Attendance Report: ", report);
+};
+
+
 function printAttendance(attendanceObj) {
   // iterate across cohorts
   const absentStudents = [];
@@ -46,4 +56,43 @@ function printAttendance(attendanceObj) {
   console.log('\x1b[0m', '');
 }
 
-module.exports = printAttendance;
+const createAttendanceReport = attendanceObj => {
+  let attendanceReport = '';
+  let absentStudents = [];
+
+  attendanceObject.forEach(cohort => {
+    cohort.forEach(student => {
+      if (!student.absent) {
+        attendanceReport += `${student.name} matched ${student.match} in ${student.room} ✅\n`;
+      } else {
+        attendanceReport += `${student.name}  ABSENT ❌\n`;
+        absentStudents.push(student.name);
+      }
+    });
+
+    const cohortString = `
+
+    ------------------------ ${cohort} ------------------------
+    ${attendanceReport}
+    
+    `;
+
+    attendanceReport += `
+    
+    --------------------- ABSENCES SUMMARY ---------------------
+    
+    `;
+
+    absentStudents.forEach(student => {
+      attendanceReport += `${student.name}\n`;
+    });
+  });
+
+  return attendanceReport;
+}
+
+module.exports = {
+  printAttendance,
+  emailAttendance,
+  writeAttendanceReport
+};
