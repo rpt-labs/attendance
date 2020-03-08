@@ -5,6 +5,7 @@ const storeZoomRecords = require('./utils/storeZoomRecords');
 const flattenZoomResults = require('./utils/flattenZoomResults');
 const { printAttendance, emailAttendance } = require('./utils/printAttendance');
 const matchStudents = require('./utils/matchStudents');
+const sendEmail = require('./utils/sendEmail');
 const { writeAttendanceToGoogleSheets } = require('./utils/writeToGoogleSheets');
 const { writeAbsencesToGoogleSheets } = require('./utils/writeToGoogleSheets');
 const formatStudentsByCohort = require('./utils/formatStudentsByCohort');
@@ -57,9 +58,9 @@ async function runAttendance(zoomResults) {
   // send for console log
   // write absence data to googly sheets
   if (recordToGoogle) writeAbsencesToGoogleSheets(attendanceObj);
-  
   printAttendance(attendanceObj);
-  emailAttendance(attendanceObj, ['magee.mooney@galvanize.com']);
+  // emailAttendance(attendanceObj, ['magee.mooney@galvanize.com']);
+  sendEmail(attendanceObj);
 }
 
 if (DEBUG) {
