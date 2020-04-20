@@ -62,7 +62,34 @@ const createStudentsTable = db => {
   );
 };
 
-const studentAttendanceTable = db => {
+const createEnrollmentsTable = db => {
+  db.run(
+    `CREATE TABLE enrollments (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      cohort_id VARCHAR,
+      student_id VARCHAR NOT NULL UNIQUE,
+      enrollment_status VARCHAR,
+      CONSTRAINT fk_cohort_id
+        FOREIGN KEY (cohort_id)
+        REFERENCES cohorts(id),
+      CONSTRAINT fk_student_id
+        FOREIGN KEY (student_id)
+        REFERENCES students(id),
+      CONSTRAINT fk_enrollment_status
+        FOREIGN KEY (enrollment_status)
+        REFERENCES enrollment_status(id)
+    )`,
+    err => {
+      if (err) {
+        // Table already created
+      } else {
+        // create rows
+      }
+    }
+  );
+};
+
+const createStudentAttendanceTable = db => {
   db.run(
     `CREATE TABLE student_attendance (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -83,7 +110,7 @@ const studentAttendanceTable = db => {
       sqltime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
       CONSTRAINT fk_enrollments
         FOREIGN KEY (enrollment_id)
-        REFERENCES enrollment_status(id)
+        REFERENCES enrollments(id)
     )`,
     err => {
       if (err) {
@@ -105,7 +132,8 @@ const db = new sqlite3.Database(DBSOURCE, err => {
     createEnrollmentStatusTable();
     createCohortsTable();
     createStudentsTable();
-    studentAttendanceTable();
+    createEnrollmentsTable();
+    createStudentAttendanceTable();
   }
 });
 
