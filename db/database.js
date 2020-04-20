@@ -14,6 +14,9 @@ const createEnrollmentStatusTable = db => {
         // Table already created
       } else {
         // create rows
+        const insert = 'INSERT INTO enrollment_status (status) VALUES (?)';
+        db.run(insert, ['enrolled']);
+        db.run(insert, ['dismissed']);
       }
     }
   );
@@ -129,11 +132,11 @@ const db = new sqlite3.Database(DBSOURCE, err => {
     throw err;
   } else {
     console.log('Connected to the SQLite database.');
-    createEnrollmentStatusTable();
-    createCohortsTable();
-    createStudentsTable();
-    createEnrollmentsTable();
-    createStudentAttendanceTable();
+    createEnrollmentStatusTable(db);
+    createCohortsTable(db);
+    createStudentsTable(db);
+    createEnrollmentsTable(db);
+    createStudentAttendanceTable(db);
   }
 });
 
