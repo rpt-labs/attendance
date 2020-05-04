@@ -1,6 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 
-const DBSOURCE = 'db.sqlite';
+const DBSOURCE = './db/attendance.sqlite3';
 const cohorts = require('./cohorts');
 const students = require('./students');
 const enrollments = require('./enrollments');
