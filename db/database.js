@@ -1,7 +1,9 @@
 const sqlite3 = require('sqlite3').verbose();
-const md5 = require('md5');
 
 const DBSOURCE = 'db.sqlite';
+const cohorts = require('./cohorts');
+const students = require('./students');
+const enrollments = require('./enrollments');
 
 const createEnrollmentStatusTable = db => {
   db.run(
@@ -17,6 +19,7 @@ const createEnrollmentStatusTable = db => {
         const insert = 'INSERT INTO enrollment_status (status) VALUES (?)';
         db.run(insert, ['enrolled']);
         db.run(insert, ['dismissed']);
+        db.run(insert, ['deferred']);
       }
     }
   );
@@ -35,7 +38,10 @@ const createCohortsTable = db => {
       if (err) {
         // Table already created
       } else {
-        // create rows
+        const insert = 'INSERT INTO cohorts VALUES (?, ?, ?, ?, ?)';
+        cohorts.forEach(cohort => {
+          db.run(insert, cohort);
+        });
       }
     }
   );
@@ -44,22 +50,25 @@ const createCohortsTable = db => {
 const createStudentsTable = db => {
   db.run(
     `CREATE TABLE students (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      student_id INTEGER PRIMARY KEY,
       first_name VARCHAR NOT NULL,
       last_name VARCHAR NOT NULL,
       zoom_name VARCHAR,
-      github text UNIQUE NOT NULL,
+      github text,
       status text NOT NULL,
-      cohort_id INTEGER
+      cohort_id INTEGER,
       CONSTRAINT fk_cohorts
         FOREIGN KEY (cohort_id)
         REFERENCES cohorts(cohort_id)
     )`,
     err => {
       if (err) {
-        // Table already created
+        console.log(err);
       } else {
-        // create rows
+        const insert = 'INSERT INTO students VALUES (?, ?, ?, ?, ?, ?, ?)';
+        students.forEach(student => {
+          db.run(insert, student);
+        });
       }
     }
   );
@@ -77,16 +86,16 @@ const createEnrollmentsTable = db => {
         REFERENCES cohorts(id),
       CONSTRAINT fk_student_id
         FOREIGN KEY (student_id)
-        REFERENCES students(id),
-      CONSTRAINT fk_enrollment_status
-        FOREIGN KEY (enrollment_status)
-        REFERENCES enrollment_status(id)
+        REFERENCES students(student_id)
     )`,
     err => {
       if (err) {
         // Table already created
       } else {
-        // create rows
+        const insert = 'INSERT INTO enrollments VALUES (?, ?, ?, ?)';
+        enrollments.forEach(enrollment => {
+          db.run(insert, enrollment);
+        });
       }
     }
   );
