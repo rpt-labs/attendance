@@ -2,8 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 
 const DBSOURCE = './db/attendance.sqlite3';
 const cohorts = require('./cohorts');
-const students = require('./students');
-const enrollments = require('./enrollments');
+const studentsList = require('./students');
 
 const createEnrollmentStatusTable = db => {
   db.run(
@@ -50,7 +49,8 @@ const createCohortsTable = db => {
 const createStudentsTable = db => {
   db.run(
     `CREATE TABLE students (
-      student_id INTEGER PRIMARY KEY,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      student_id INTEGER NOT NULL,
       first_name VARCHAR NOT NULL,
       last_name VARCHAR NOT NULL,
       zoom_name VARCHAR,
@@ -65,8 +65,8 @@ const createStudentsTable = db => {
       if (err) {
         console.log(err);
       } else {
-        const insert = 'INSERT INTO students VALUES (?, ?, ?, ?, ?, ?, ?)';
-        students.forEach(student => {
+        const insert = 'INSERT INTO students VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+        studentsList.forEach(student => {
           db.run(insert, student);
         });
       }
@@ -79,22 +79,38 @@ const createEnrollmentsTable = db => {
     `CREATE TABLE enrollments (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       cohort_id VARCHAR,
-      student_id VARCHAR NOT NULL UNIQUE,
+      student_id VARCHAR NOT NULL,
       enrollment_status VARCHAR,
       CONSTRAINT fk_cohort_id
         FOREIGN KEY (cohort_id)
         REFERENCES cohorts(id),
       CONSTRAINT fk_student_id
         FOREIGN KEY (student_id)
-        REFERENCES students(student_id)
+        REFERENCES students(id)
     )`,
     err => {
       if (err) {
-        // Table already created
+        console.log('error', err);
       } else {
         const insert = 'INSERT INTO enrollments VALUES (?, ?, ?, ?)';
-        enrollments.forEach(enrollment => {
-          db.run(insert, enrollment);
+        studentsList.forEach(student => {
+          const sql = `select id, status, cohort_id from students where first_name=? and last_name=?`;
+          db.get(sql, [student[2], student[3]], (error, rows) => {
+            if (error) {
+              throw error;
+            }
+            const studentId = rows.id;
+            const { status } = rows;
+            const cohortId = rows.cohort_id;
+            const cohortSql = `select id from cohorts where cohort_id=?`;
+            db.get(cohortSql, cohortId, (error1, row) => {
+              if (error1) {
+                throw error1;
+              }
+              const { id } = row;
+              db.run(insert, [null, id, studentId, status]);
+            });
+          });
         });
       }
     }
